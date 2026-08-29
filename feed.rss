@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>RSS フィード</title>
+        <link>http://cf363068.cloudfree.jp/modx/</link>
+        <description>RSSフィードのサンプルです。</description>
+        <language>ja</language>
+        <copyright>Tachikawa-nsk 2026</copyright>
+        <ttl>120</ttl>    <item>
+        <title>新サービスのお知らせ</title>
+        <link>http://cf363068.cloudfree.jp/modx/news/newservice.html</link>
+        <description><![CDATA[  ]]></description>
+        <pubDate>Thu, 20 Jun 2024 10:00:00 +0900</pubDate>
+        <guid isPermaLink="true">http://cf363068.cloudfree.jp/modx/news/newservice.html</guid>
+        <dc:creator></dc:creator>
+        
+    </item>    <item>
+        <title>サイトをオープンしました。</title>
+        <link>http://cf363068.cloudfree.jp/modx/news/begin.html</link>
+        <description><![CDATA[  ]]></description>
+        <pubDate>Fri, 21 Jun 2024 10:00:00 +0900</pubDate>
+        <guid isPermaLink="true">http://cf363068.cloudfree.jp/modx/news/begin.html</guid>
+        <dc:creator></dc:creator>
+        
+    </item>    </channel>
+</rss>
