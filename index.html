@@ -1,151 +1,1666 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <base href="https://pages.tachikawa-nsk.site/">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/favicon.ico" >
-    <title>Home - Tachikawa-nsk</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        html {
-            font-size: 16px;
-            position: relative;
-            min-height: 100%;
+<!DOCTYPE html><html lang="ja"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SkyDesk Cloud - ワークスペース統合シミュレータ</title>
+<!-- Material Symbols Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      prefix: "t-",
+      corePlugins: {
+        preflight: false
+      },
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "var(--primary-color, #0284c7)",
+            "primary-dark": "var(--primary-dark, #0369a1)",
+            "primary-container": "var(--primary-container, #0ea5e9)",
+            "on-primary": "#ffffff",
+            "footer-bg": "var(--footer-bg, #0369a1)",
+            "surface": "#f8f9ff",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f0f6fc",
+            "surface-container": "#e2eefb",
+            "surface-container-high": "#d4e5f7",
+            "on-surface": "#0f172a",
+            "on-surface-variant": "#334155",
+            "outline": "#64748b",
+            "outline-variant": "#cbd5e1",
+            "background": "#f0f6fc"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', '"Hiragino Sans"', '"BIZ UDPGothic"', 'Meiryo', 'sans-serif']
+          }
         }
+      }
+    };
+  </script>
+<style>
+    /* ================= SCOPED CSS RESET (Preflight Disabled Replacement) ================= */
+    *, ::before, ::after {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+      border-color: currentColor;
+    }
+    html {
+      line-height: 1.5;
+      -webkit-text-size-adjust: 100%;
+      tab-size: 4;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Hiragino Sans", "BIZ UDPGothic", Meiryo, sans-serif;
+    }
+    body, h1, h2, h3, h4, h5, h6, p, ul, ol, figure, blockquote, dl, dd {
+      margin: 0;
+      padding: 0;
+    }
+    ul, ol {
+      list-style: none;
+    }
+    button, input, optgroup, select, textarea {
+      font-family: inherit;
+      font-size: 100%;
+      font-weight: inherit;
+      line-height: inherit;
+      color: inherit;
+      margin: 0;
+      padding: 0;
+      border: 0 solid currentColor;
+      background: transparent;
+    }
+    button, [role="button"] {
+      cursor: pointer;
+    }
+    button, select {
+      text-transform: none;
+    }
+    img, svg, video, canvas, audio, iframe, embed, object {
+      display: block;
+      vertical-align: middle;
+      max-width: 100%;
+      height: auto;
+    }
+    table {
+      text-indent: 0;
+      border-color: inherit;
+      border-collapse: collapse;
+    }
+    /* ================= THEME DEFINITIONS ================= */
+    :root {
+      --primary-color: #0284c7;
+      --primary-dark: #0369a1;
+      --primary-container: #0ea5e9;
+      --primary-light: #e0f2fe;
+      --footer-bg: #0369a1;
+      --theme-badge: #0284c7;
+    }
+    body.theme-modx {
+      --primary-color: #4b634b;
+      --primary-dark: #415141;
+      --primary-container: #536753;
+      --primary-light: #eaf0ea;
+      --footer-bg: #415141;
+      --theme-badge: #415141;
+    }
+    body.theme-asagi {
+      --primary-color: #0d9488;
+      --primary-dark: #0f766e;
+      --primary-container: #14b8a6;
+      --primary-light: #ccfbf1;
+      --footer-bg: #0f766e;
+      --theme-badge: #0d9488;
+    }
+    body.theme-ruri {
+      --primary-color: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-container: #3b82f6;
+      --primary-light: #dbeafe;
+      --footer-bg: #1d4ed8;
+      --theme-badge: #2563eb;
+    }
+    body.theme-yuakane {
+      --primary-color: #ea580c;
+      --primary-dark: #c2410c;
+      --primary-container: #f97316;
+      --primary-light: #ffedd5;
+      --footer-bg: #c2410c;
+      --theme-badge: #ea580c;
+    }
+    body.theme-sumi {
+      --primary-color: #475569;
+      --primary-dark: #334155;
+      --primary-container: #64748b;
+      --primary-light: #f1f5f9;
+      --footer-bg: #334155;
+      --theme-badge: #475569;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Hiragino Sans", "BIZ UDPGothic", Meiryo, sans-serif;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    /* ハンバーガーアイコンのアニメーション定義 */
+    .hamburger-icon-box {
+      width: 18px;
+      height: 14px;
+      position: relative;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .hamburger-line {
+      display: block;
+      height: 2px;
+      width: 100%;
+      background-color: currentColor;
+      border-radius: 9999px;
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, width 0.25s ease;
+      transform-origin: center;
+    }
+    .hamburger-active .line-top {
+      transform: translateY(6px) rotate(45deg);
+    }
+    .hamburger-active .line-middle {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    .hamburger-active .line-bottom {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+    /* 吹き出し（Speech Bubble）タブスタイル定義 */
+    .bubble-tab-btn {
+      position: relative;
+      background-color: var(--primary-light, #e0f2fe);
+      color: var(--primary-color, #0284c7);
+      border-radius: 0.5rem 0.5rem 0 0;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      z-index: 1;
+    }
+    .bubble-tab-btn:hover {
+      filter: brightness(0.96);
+    }
+    .bubble-tab-btn.active {
+      background-color: var(--primary-color, #0284c7) !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      z-index: 10;
+    }
+    .bubble-tab-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: -7px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 7px solid var(--primary-color, #0284c7);
+      z-index: 20;
+    }
 
-        body {
-            padding-top: 56px;
-            margin-bottom: 60px;
-            font-family: Roboto, "Droid Sans", "Open Sans", Arial, Helvetica, Meiryo, "Hiragino Kaku Gothic ProN", sans-serif;
-            font-size: 16px;
-        }
+    /* Scroll List (Marquee) Animation */
+    .scroll-list-container {
+      overflow: hidden;
+      white-space: nowrap;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .scroll-list {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      width: max-content;
+      animation: scroll-left 8s linear infinite;
+    }
+    .scroll-list li {
+      display: inline-flex;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--on-surface, #0f172a);
+      letter-spacing: 0.02em;
+    }
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(100%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+  </style>
+<style>*, ::before, ::after {--tw-border-spacing-x: 0;--tw-border-spacing-y: 0;--tw-translate-x: 0;--tw-translate-y: 0;--tw-rotate: 0;--tw-skew-x: 0;--tw-skew-y: 0;--tw-scale-x: 1;--tw-scale-y: 1;--tw-pan-x:  ;--tw-pan-y:  ;--tw-pinch-zoom:  ;--tw-scroll-snap-strictness: proximity;--tw-gradient-from-position:  ;--tw-gradient-via-position:  ;--tw-gradient-to-position:  ;--tw-ordinal:  ;--tw-slashed-zero:  ;--tw-numeric-figure:  ;--tw-numeric-spacing:  ;--tw-numeric-fraction:  ;--tw-ring-inset:  ;--tw-ring-offset-width: 0px;--tw-ring-offset-color: #fff;--tw-ring-color: rgb(59 130 246 / 0.5);--tw-ring-offset-shadow: 0 0 #0000;--tw-ring-shadow: 0 0 #0000;--tw-shadow: 0 0 #0000;--tw-shadow-colored: 0 0 #0000;--tw-blur:  ;--tw-brightness:  ;--tw-contrast:  ;--tw-grayscale:  ;--tw-hue-rotate:  ;--tw-invert:  ;--tw-saturate:  ;--tw-sepia:  ;--tw-drop-shadow:  ;--tw-backdrop-blur:  ;--tw-backdrop-brightness:  ;--tw-backdrop-contrast:  ;--tw-backdrop-grayscale:  ;--tw-backdrop-hue-rotate:  ;--tw-backdrop-invert:  ;--tw-backdrop-opacity:  ;--tw-backdrop-saturate:  ;--tw-backdrop-sepia:  ;--tw-contain-size:  ;--tw-contain-layout:  ;--tw-contain-paint:  ;--tw-contain-style:  ;
+}::backdrop {--tw-border-spacing-x: 0;--tw-border-spacing-y: 0;--tw-translate-x: 0;--tw-translate-y: 0;--tw-rotate: 0;--tw-skew-x: 0;--tw-skew-y: 0;--tw-scale-x: 1;--tw-scale-y: 1;--tw-pan-x:  ;--tw-pan-y:  ;--tw-pinch-zoom:  ;--tw-scroll-snap-strictness: proximity;--tw-gradient-from-position:  ;--tw-gradient-via-position:  ;--tw-gradient-to-position:  ;--tw-ordinal:  ;--tw-slashed-zero:  ;--tw-numeric-figure:  ;--tw-numeric-spacing:  ;--tw-numeric-fraction:  ;--tw-ring-inset:  ;--tw-ring-offset-width: 0px;--tw-ring-offset-color: #fff;--tw-ring-color: rgb(59 130 246 / 0.5);--tw-ring-offset-shadow: 0 0 #0000;--tw-ring-shadow: 0 0 #0000;--tw-shadow: 0 0 #0000;--tw-shadow-colored: 0 0 #0000;--tw-blur:  ;--tw-brightness:  ;--tw-contrast:  ;--tw-grayscale:  ;--tw-hue-rotate:  ;--tw-invert:  ;--tw-saturate:  ;--tw-sepia:  ;--tw-drop-shadow:  ;--tw-backdrop-blur:  ;--tw-backdrop-brightness:  ;--tw-backdrop-contrast:  ;--tw-backdrop-grayscale:  ;--tw-backdrop-hue-rotate:  ;--tw-backdrop-invert:  ;--tw-backdrop-opacity:  ;--tw-backdrop-saturate:  ;--tw-backdrop-sepia:  ;--tw-contain-size:  ;--tw-contain-layout:  ;--tw-contain-paint:  ;--tw-contain-style:  ;
+}[type='text'],input:where(:not([type])),[type='email'],[type='url'],[type='password'],[type='number'],[type='date'],[type='datetime-local'],[type='month'],[type='search'],[type='tel'],[type='time'],[type='week'],[multiple],textarea,select {-webkit-appearance: none;appearance: none;background-color: #fff;border-color: #6b7280;border-width: 1px;border-radius: 0px;padding-top: 0.5rem;padding-right: 0.75rem;padding-bottom: 0.5rem;padding-left: 0.75rem;font-size: 1rem;line-height: 1.5rem;--tw-shadow: 0 0 #0000;
+}[type='text']:focus, input:where(:not([type])):focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus, select:focus {outline: 2px solid transparent;outline-offset: 2px;--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);--tw-ring-offset-width: 0px;--tw-ring-offset-color: #fff;--tw-ring-color: #2563eb;--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);border-color: #2563eb;
+}input::placeholder,textarea::placeholder {color: #6b7280;opacity: 1;
+}::-webkit-datetime-edit-fields-wrapper {padding: 0;
+}::-webkit-date-and-time-value {min-height: 1.5em;text-align: inherit;
+}::-webkit-datetime-edit {display: inline-flex;
+}::-webkit-datetime-edit,::-webkit-datetime-edit-year-field,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute-field,::-webkit-datetime-edit-second-field,::-webkit-datetime-edit-millisecond-field,::-webkit-datetime-edit-meridiem-field {padding-top: 0;padding-bottom: 0;
+}select {background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");background-position: right 0.5rem center;background-repeat: no-repeat;background-size: 1.5em 1.5em;padding-right: 2.5rem;print-color-adjust: exact;
+}[multiple],[size]:where(select:not([size="1"])) {background-image: initial;background-position: initial;background-repeat: unset;background-size: initial;padding-right: 0.75rem;print-color-adjust: unset;
+}[type='checkbox'],[type='radio'] {-webkit-appearance: none;appearance: none;padding: 0;print-color-adjust: exact;display: inline-block;vertical-align: middle;background-origin: border-box;-webkit-user-select: none;user-select: none;flex-shrink: 0;height: 1rem;width: 1rem;color: #2563eb;background-color: #fff;border-color: #6b7280;border-width: 1px;--tw-shadow: 0 0 #0000;
+}[type='checkbox'] {border-radius: 0px;
+}[type='radio'] {border-radius: 100%;
+}[type='checkbox']:focus,[type='radio']:focus {outline: 2px solid transparent;outline-offset: 2px;--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);--tw-ring-offset-width: 2px;--tw-ring-offset-color: #fff;--tw-ring-color: #2563eb;--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}[type='checkbox']:checked,[type='radio']:checked {border-color: transparent;background-color: currentColor;background-size: 100% 100%;background-position: center;background-repeat: no-repeat;
+}[type='checkbox']:checked {background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+}@media (forced-colors: active)  {[type='checkbox']:checked {-webkit-appearance: auto;appearance: auto;
+    }
+}[type='radio']:checked {background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+}@media (forced-colors: active)  {[type='radio']:checked {-webkit-appearance: auto;appearance: auto;
+    }
+}[type='checkbox']:checked:hover,[type='checkbox']:checked:focus,[type='radio']:checked:hover,[type='radio']:checked:focus {border-color: transparent;background-color: currentColor;
+}[type='checkbox']:indeterminate {background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3e%3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8h8'/%3e%3c/svg%3e");border-color: transparent;background-color: currentColor;background-size: 100% 100%;background-position: center;background-repeat: no-repeat;
+}@media (forced-colors: active)  {[type='checkbox']:indeterminate {-webkit-appearance: auto;appearance: auto;
+    }
+}[type='checkbox']:indeterminate:hover,[type='checkbox']:indeterminate:focus {border-color: transparent;background-color: currentColor;
+}[type='file'] {background: unset;border-color: inherit;border-width: 0;border-radius: 0;padding: 0;font-size: unset;line-height: inherit;
+}[type='file']:focus {outline: 1px solid ButtonText;outline: 1px auto -webkit-focus-ring-color;
+}.t-pointer-events-none {pointer-events: none;
+}.t-fixed {position: fixed;
+}.t-absolute {position: absolute;
+}.t-relative {position: relative;
+}.t-inset-0 {inset: 0px;
+}.t-bottom-0 {bottom: 0px;
+}.t-bottom-\[20px\] {bottom: 20px;
+}.t-left-0 {left: 0px;
+}.t-left-2\.5 {left: 0.625rem;
+}.t-left-4 {left: 1rem;
+}.t-right-2 {right: 0.5rem;
+}.t-top-0 {top: 0px;
+}.t-top-16 {top: 4rem;
+}.t-top-\[51px\] {top: 51px;
+}.t-right-4 {right: 1rem;
+}.t-z-30 {z-index: 30;
+}.t-z-40 {z-index: 40;
+}.t-z-50 {z-index: 50;
+}.t-mx-2 {margin-left: 0.5rem;margin-right: 0.5rem;
+}.t-mx-auto {margin-left: auto;margin-right: auto;
+}.t-ml-0\.5 {margin-left: 0.125rem;
+}.t-mt-1 {margin-top: 0.25rem;
+}.t-mt-1\.5 {margin-top: 0.375rem;
+}.t-mt-2 {margin-top: 0.5rem;
+}.t-block {display: block;
+}.t-flex {display: flex;
+}.\!t-flex {display: flex !important;
+}.t-grid {display: grid;
+}.t-hidden {display: none;
+}.\!t-hidden {display: none !important;
+}.t-h-1\.5 {height: 0.375rem;
+}.t-h-10 {height: 2.5rem;
+}.t-h-16 {height: 4rem;
+}.t-h-2 {height: 0.5rem;
+}.t-h-3\.5 {height: 0.875rem;
+}.t-h-44 {height: 11rem;
+}.t-h-7 {height: 1.75rem;
+}.t-h-8 {height: 2rem;
+}.t-h-9 {height: 2.25rem;
+}.t-h-\[952px\] {height: 952px;
+}.t-h-full {height: 100%;
+}.t-max-h-\[952px\] {max-height: 952px;
+}.t-min-h-screen {min-height: 100vh;
+}.t-w-2 {width: 0.5rem;
+}.t-w-3\.5 {width: 0.875rem;
+}.t-w-7 {width: 1.75rem;
+}.t-w-8 {width: 2rem;
+}.t-w-9 {width: 2.25rem;
+}.t-w-\[270px\] {width: 270px;
+}.t-w-\[410px\] {width: 410px;
+}.t-w-\[90\%\] {width: 90%;
+}.t-w-auto {width: auto;
+}.t-w-full {width: 100%;
+}.t-min-w-0 {min-width: 0px;
+}.t-min-w-\[84px\] {min-width: 84px;
+}.t-max-w-\[140px\] {max-width: 140px;
+}.t-max-w-\[150px\] {max-width: 150px;
+}.t-max-w-\[190px\] {max-width: 190px;
+}.t-max-w-\[380px\] {max-width: 380px;
+}.t-max-w-\[640px\] {max-width: 640px;
+}.t-max-w-\[95px\] {max-width: 95px;
+}.t-max-w-full {max-width: 100%;
+}.t-max-w-\[390px\] {max-width: 390px;
+}.t-flex-1 {flex: 1 1 0%;
+}.t-shrink-0 {flex-shrink: 0;
+}.t-border-collapse {border-collapse: collapse;
+}.-t-translate-x-\[110\%\] {--tw-translate-x: -110%;transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}.-t-translate-y-8 {--tw-translate-y: -2rem;transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}.t-translate-x-\[110\%\] {--tw-translate-x: 110%;transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}.t-translate-x-0 {--tw-translate-x: 0px;transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}.t-scale-95 {--tw-scale-x: .95;--tw-scale-y: .95;transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}.t-transform {transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}.t-cursor-pointer {cursor: pointer;
+}.t-select-none {-webkit-user-select: none;user-select: none;
+}.t-appearance-none {-webkit-appearance: none;appearance: none;
+}.t-grid-cols-1 {grid-template-columns: repeat(1, minmax(0, 1fr));
+}.t-grid-cols-2 {grid-template-columns: repeat(2, minmax(0, 1fr));
+}.t-flex-col {flex-direction: column;
+}.t-flex-wrap {flex-wrap: wrap;
+}.t-items-start {align-items: flex-start;
+}.t-items-center {align-items: center;
+}.t-items-baseline {align-items: baseline;
+}.t-justify-end {justify-content: flex-end;
+}.t-justify-center {justify-content: center;
+}.t-justify-between {justify-content: space-between;
+}.t-gap-0\.5 {gap: 0.125rem;
+}.t-gap-1 {gap: 0.25rem;
+}.t-gap-1\.5 {gap: 0.375rem;
+}.t-gap-2 {gap: 0.5rem;
+}.t-gap-2\.5 {gap: 0.625rem;
+}.t-gap-3 {gap: 0.75rem;
+}.t-gap-4 {gap: 1rem;
+}.t-gap-x-3 {column-gap: 0.75rem;
+}.t-gap-y-0\.5 {row-gap: 0.125rem;
+}.t-space-y-1 > :not([hidden]) ~ :not([hidden]) {--tw-space-y-reverse: 0;margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}.t-space-y-1\.5 > :not([hidden]) ~ :not([hidden]) {--tw-space-y-reverse: 0;margin-top: calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom: calc(0.375rem * var(--tw-space-y-reverse));
+}.t-space-y-2 > :not([hidden]) ~ :not([hidden]) {--tw-space-y-reverse: 0;margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}.t-space-y-3 > :not([hidden]) ~ :not([hidden]) {--tw-space-y-reverse: 0;margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
+}.t-space-y-4 > :not([hidden]) ~ :not([hidden]) {--tw-space-y-reverse: 0;margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}.t-space-y-5 > :not([hidden]) ~ :not([hidden]) {--tw-space-y-reverse: 0;margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
+}.t-divide-y > :not([hidden]) ~ :not([hidden]) {--tw-divide-y-reverse: 0;border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
+}.t-divide-surface-container > :not([hidden]) ~ :not([hidden]) {--tw-divide-opacity: 1;border-color: rgb(226 238 251 / var(--tw-divide-opacity, 1));
+}.t-overflow-hidden {overflow: hidden;
+}.t-overflow-visible {overflow: visible;
+}.t-overflow-x-auto {overflow-x: auto;
+}.t-overflow-y-auto {overflow-y: auto;
+}.t-rounded {border-radius: 0.25rem;
+}.t-rounded-2xl {border-radius: 1rem;
+}.t-rounded-full {border-radius: 9999px;
+}.t-rounded-lg {border-radius: 0.5rem;
+}.t-rounded-md {border-radius: 0.375rem;
+}.t-rounded-xl {border-radius: 0.75rem;
+}.t-border {border-width: 1px;
+}.t-border-b {border-bottom-width: 1px;
+}.t-border-b-2 {border-bottom-width: 2px;
+}.t-border-t {border-top-width: 1px;
+}.t-border-\[\#bfdbfe\] {--tw-border-opacity: 1;border-color: rgb(191 219 254 / var(--tw-border-opacity, 1));
+}.t-border-slate-100 {--tw-border-opacity: 1;border-color: rgb(241 245 249 / var(--tw-border-opacity, 1));
+}.t-border-surface-container {--tw-border-opacity: 1;border-color: rgb(226 238 251 / var(--tw-border-opacity, 1));
+}.t-border-white\/10 {border-color: rgb(255 255 255 / 0.1);
+}.t-border-white\/20 {border-color: rgb(255 255 255 / 0.2);
+}.t-border-white\/30 {border-color: rgb(255 255 255 / 0.3);
+}.t-bg-\[\#0284c7\] {--tw-bg-opacity: 1;background-color: rgb(2 132 199 / var(--tw-bg-opacity, 1));
+}.t-bg-\[\#0d9488\] {--tw-bg-opacity: 1;background-color: rgb(13 148 136 / var(--tw-bg-opacity, 1));
+}.t-bg-\[\#2563eb\] {--tw-bg-opacity: 1;background-color: rgb(37 99 235 / var(--tw-bg-opacity, 1));
+}.t-bg-\[\#415141\] {--tw-bg-opacity: 1;background-color: rgb(65 81 65 / var(--tw-bg-opacity, 1));
+}.t-bg-\[\#475569\] {--tw-bg-opacity: 1;background-color: rgb(71 85 105 / var(--tw-bg-opacity, 1));
+}.t-bg-\[\#ea580c\] {--tw-bg-opacity: 1;background-color: rgb(234 88 12 / var(--tw-bg-opacity, 1));
+}.t-bg-\[\#eff6ff\] {--tw-bg-opacity: 1;background-color: rgb(239 246 255 / var(--tw-bg-opacity, 1));
+}.t-bg-amber-100 {--tw-bg-opacity: 1;background-color: rgb(254 243 199 / var(--tw-bg-opacity, 1));
+}.t-bg-amber-500 {--tw-bg-opacity: 1;background-color: rgb(245 158 11 / var(--tw-bg-opacity, 1));
+}.t-bg-background {--tw-bg-opacity: 1;background-color: rgb(240 246 252 / var(--tw-bg-opacity, 1));
+}.t-bg-emerald-100 {--tw-bg-opacity: 1;background-color: rgb(209 250 229 / var(--tw-bg-opacity, 1));
+}.t-bg-emerald-500 {--tw-bg-opacity: 1;background-color: rgb(16 185 129 / var(--tw-bg-opacity, 1));
+}.t-bg-purple-500 {--tw-bg-opacity: 1;background-color: rgb(168 85 247 / var(--tw-bg-opacity, 1));
+}.t-bg-sky-100 {--tw-bg-opacity: 1;background-color: rgb(224 242 254 / var(--tw-bg-opacity, 1));
+}.t-bg-sky-500 {--tw-bg-opacity: 1;background-color: rgb(14 165 233 / var(--tw-bg-opacity, 1));
+}.t-bg-slate-100 {--tw-bg-opacity: 1;background-color: rgb(241 245 249 / var(--tw-bg-opacity, 1));
+}.t-bg-slate-200 {--tw-bg-opacity: 1;background-color: rgb(226 232 240 / var(--tw-bg-opacity, 1));
+}.t-bg-slate-900\/40 {background-color: rgb(15 23 42 / 0.4);
+}.t-bg-surface-container-low {--tw-bg-opacity: 1;background-color: rgb(240 246 252 / var(--tw-bg-opacity, 1));
+}.t-bg-surface-container-low\/30 {background-color: rgb(240 246 252 / 0.3);
+}.t-bg-surface-container-low\/50 {background-color: rgb(240 246 252 / 0.5);
+}.t-bg-surface-container-low\/60 {background-color: rgb(240 246 252 / 0.6);
+}.t-bg-surface-container-low\/70 {background-color: rgb(240 246 252 / 0.7);
+}.t-bg-white {--tw-bg-opacity: 1;background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}.t-bg-white\/15 {background-color: rgb(255 255 255 / 0.15);
+}.t-bg-white\/95 {background-color: rgb(255 255 255 / 0.95);
+}.t-object-contain {object-fit: contain;
+}.t-p-0\.5 {padding: 0.125rem;
+}.t-p-2 {padding: 0.5rem;
+}.t-p-2\.5 {padding: 0.625rem;
+}.t-p-3 {padding: 0.75rem;
+}.t-p-3\.5 {padding: 0.875rem;
+}.t-p-4 {padding: 1rem;
+}.t-px-1 {padding-left: 0.25rem;padding-right: 0.25rem;
+}.t-px-2 {padding-left: 0.5rem;padding-right: 0.5rem;
+}.t-px-2\.5 {padding-left: 0.625rem;padding-right: 0.625rem;
+}.t-px-3 {padding-left: 0.75rem;padding-right: 0.75rem;
+}.t-px-3\.5 {padding-left: 0.875rem;padding-right: 0.875rem;
+}.t-px-4 {padding-left: 1rem;padding-right: 1rem;
+}.t-py-0\.5 {padding-top: 0.125rem;padding-bottom: 0.125rem;
+}.t-py-1 {padding-top: 0.25rem;padding-bottom: 0.25rem;
+}.t-py-1\.5 {padding-top: 0.375rem;padding-bottom: 0.375rem;
+}.t-py-2 {padding-top: 0.5rem;padding-bottom: 0.5rem;
+}.t-py-2\.5 {padding-top: 0.625rem;padding-bottom: 0.625rem;
+}.t-pb-0 {padding-bottom: 0px;
+}.t-pb-1 {padding-bottom: 0.25rem;
+}.t-pb-32 {padding-bottom: 8rem;
+}.t-pb-\[20px\] {padding-bottom: 20px;
+}.t-pl-8 {padding-left: 2rem;
+}.t-pr-7 {padding-right: 1.75rem;
+}.t-pt-1 {padding-top: 0.25rem;
+}.t-pt-1\.5 {padding-top: 0.375rem;
+}.t-pt-2 {padding-top: 0.5rem;
+}.t-pt-28 {padding-top: 7rem;
+}.t-pt-\[51px\] {padding-top: 51px;
+}.t-text-left {text-align: left;
+}.t-text-center {text-align: center;
+}.t-text-right {text-align: right;
+}.t-font-mono {font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}.t-font-sans {font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Hiragino Sans", "BIZ UDPGothic", Meiryo, sans-serif;
+}.t-text-\[10px\] {font-size: 10px;
+}.t-text-\[11px\] {font-size: 11px;
+}.t-text-\[12px\] {font-size: 12px;
+}.t-text-\[13px\] {font-size: 13px;
+}.t-text-\[14px\] {font-size: 14px;
+}.t-text-\[16px\] {font-size: 16px;
+}.t-text-\[17px\] {font-size: 17px;
+}.t-text-\[18px\] {font-size: 18px;
+}.t-text-\[19px\] {font-size: 19px;
+}.t-text-\[20px\] {font-size: 20px;
+}.t-text-\[22px\] {font-size: 22px;
+}.t-font-bold {font-weight: 700;
+}.t-font-medium {font-weight: 500;
+}.t-font-normal {font-weight: 400;
+}.t-font-semibold {font-weight: 600;
+}.t-leading-relaxed {line-height: 1.625;
+}.t-tracking-tight {letter-spacing: -0.025em;
+}.t-text-\[\#e0f2fe\] {--tw-text-opacity: 1;color: rgb(224 242 254 / var(--tw-text-opacity, 1));
+}.t-text-amber-800 {--tw-text-opacity: 1;color: rgb(146 64 14 / var(--tw-text-opacity, 1));
+}.t-text-emerald-600 {--tw-text-opacity: 1;color: rgb(5 150 105 / var(--tw-text-opacity, 1));
+}.t-text-emerald-700 {--tw-text-opacity: 1;color: rgb(4 120 87 / var(--tw-text-opacity, 1));
+}.t-text-on-surface {--tw-text-opacity: 1;color: rgb(15 23 42 / var(--tw-text-opacity, 1));
+}.t-text-on-surface-variant {--tw-text-opacity: 1;color: rgb(51 65 85 / var(--tw-text-opacity, 1));
+}.t-text-outline {--tw-text-opacity: 1;color: rgb(100 116 139 / var(--tw-text-opacity, 1));
+}.t-text-sky-600 {--tw-text-opacity: 1;color: rgb(2 132 199 / var(--tw-text-opacity, 1));
+}.t-text-sky-700 {--tw-text-opacity: 1;color: rgb(3 105 161 / var(--tw-text-opacity, 1));
+}.t-text-slate-700 {--tw-text-opacity: 1;color: rgb(51 65 85 / var(--tw-text-opacity, 1));
+}.t-text-slate-800 {--tw-text-opacity: 1;color: rgb(30 41 59 / var(--tw-text-opacity, 1));
+}.t-text-white {--tw-text-opacity: 1;color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}.t-text-white\/80 {color: rgb(255 255 255 / 0.8);
+}.t-text-white\/90 {color: rgb(255 255 255 / 0.9);
+}.t-antialiased {-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;
+}.t-opacity-0 {opacity: 0;
+}.t-shadow-\[0_12px_40px_rgba\(2\,132\,199\,0\.25\)\] {--tw-shadow: 0 12px 40px rgba(2,132,199,0.25);--tw-shadow-colored: 0 12px 40px var(--tw-shadow-color);box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}.t-shadow-\[0_16px_48px_rgba\(2\,132\,199\,0\.28\)\] {--tw-shadow: 0 16px 48px rgba(2,132,199,0.28);--tw-shadow-colored: 0 16px 48px var(--tw-shadow-color);box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}.t-shadow-lg {--tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}.t-shadow-md {--tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}.t-shadow-sm {--tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}.t-backdrop-blur {--tw-backdrop-blur: blur(8px);-webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}.t-backdrop-blur-md {--tw-backdrop-blur: blur(12px);-webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}.t-transition-all {transition-property: all;transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);transition-duration: 150ms;
+}.t-transition-colors {transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);transition-duration: 150ms;
+}.t-transition-opacity {transition-property: opacity;transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);transition-duration: 150ms;
+}.t-transition-transform {transition-property: transform;transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);transition-duration: 150ms;
+}.t-duration-200 {transition-duration: 200ms;
+}.t-duration-300 {transition-duration: 300ms;
+}.hover\:t-bg-surface-container:hover {--tw-bg-opacity: 1;background-color: rgb(226 238 251 / var(--tw-bg-opacity, 1));
+}.hover\:t-bg-surface-container-low:hover {--tw-bg-opacity: 1;background-color: rgb(240 246 252 / var(--tw-bg-opacity, 1));
+}.hover\:t-bg-surface-container-low\/40:hover {background-color: rgb(240 246 252 / 0.4);
+}.hover\:t-bg-white\/25:hover {background-color: rgb(255 255 255 / 0.25);
+}.hover\:t-text-on-surface:hover {--tw-text-opacity: 1;color: rgb(15 23 42 / var(--tw-text-opacity, 1));
+}.hover\:t-underline:hover {-webkit-text-decoration-line: underline;text-decoration-line: underline;
+}.hover\:t-shadow-md:hover {--tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}.focus\:t-border-white:focus {--tw-border-opacity: 1;border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
+}.focus\:t-ring-2:focus {--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}.focus\:t-ring-white\/30:focus {--tw-ring-color: rgb(255 255 255 / 0.3);
+}.active\:t-scale-95:active {--tw-scale-x: .95;--tw-scale-y: .95;transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}@media (min-width: 640px) {.sm\:t-inline {display: inline;
+    }.sm\:t-h-48 {height: 12rem;
+    }.sm\:t-h-8 {height: 2rem;
+    }.sm\:t-min-w-\[100px\] {min-width: 100px;
+    }.sm\:t-max-w-\[115px\] {max-width: 115px;
+    }.sm\:t-max-w-none {max-width: none;
+    }.sm\:t-flex-col {flex-direction: column;
+    }.sm\:t-gap-2\.5 {gap: 0.625rem;
+    }.sm\:t-gap-3 {gap: 0.75rem;
+    }.sm\:t-gap-6 {gap: 1.5rem;
+    }.sm\:t-p-6 {padding: 1.5rem;
+    }.sm\:t-px-4 {padding-left: 1rem;padding-right: 1rem;
+    }.sm\:t-px-5 {padding-left: 1.25rem;padding-right: 1.25rem;
+    }.sm\:t-px-6 {padding-left: 1.5rem;padding-right: 1.5rem;
+    }.sm\:t-text-\[13px\] {font-size: 13px;
+    }.sm\:t-text-\[21px\] {font-size: 21px;
+    }
+}@media (min-width: 768px) {.md\:t-flex {display: flex;
+    }.md\:t-hidden {display: none;
+    }
+}@media (min-width: 1024px) {.lg\:t-flex {display: flex;
+    }.lg\:t-hidden {display: none;
+    }.lg\:t-grid-cols-4 {grid-template-columns: repeat(4, minmax(0, 1fr));
+    }.lg\:t-gap-4 {gap: 1rem;
+    }.lg\:t-px-6 {padding-left: 1.5rem;padding-right: 1.5rem;
+    }
+}</style><style>*, ::before, ::after {--tw-border-spacing-x: 0;--tw-border-spacing-y: 0;--tw-translate-x: 0;--tw-translate-y: 0;--tw-rotate: 0;--tw-skew-x: 0;--tw-skew-y: 0;--tw-scale-x: 1;--tw-scale-y: 1;--tw-pan-x:  ;--tw-pan-y:  ;--tw-pinch-zoom:  ;--tw-scroll-snap-strictness: proximity;--tw-gradient-from-position:  ;--tw-gradient-via-position:  ;--tw-gradient-to-position:  ;--tw-ordinal:  ;--tw-slashed-zero:  ;--tw-numeric-figure:  ;--tw-numeric-spacing:  ;--tw-numeric-fraction:  ;--tw-ring-inset:  ;--tw-ring-offset-width: 0px;--tw-ring-offset-color: #fff;--tw-ring-color: rgb(59 130 246 / 0.5);--tw-ring-offset-shadow: 0 0 #0000;--tw-ring-shadow: 0 0 #0000;--tw-shadow: 0 0 #0000;--tw-shadow-colored: 0 0 #0000;--tw-blur:  ;--tw-brightness:  ;--tw-contrast:  ;--tw-grayscale:  ;--tw-hue-rotate:  ;--tw-invert:  ;--tw-saturate:  ;--tw-sepia:  ;--tw-drop-shadow:  ;--tw-backdrop-blur:  ;--tw-backdrop-brightness:  ;--tw-backdrop-contrast:  ;--tw-backdrop-grayscale:  ;--tw-backdrop-hue-rotate:  ;--tw-backdrop-invert:  ;--tw-backdrop-opacity:  ;--tw-backdrop-saturate:  ;--tw-backdrop-sepia:  ;--tw-contain-size:  ;--tw-contain-layout:  ;--tw-contain-paint:  ;--tw-contain-style:  ;
+}::backdrop {--tw-border-spacing-x: 0;--tw-border-spacing-y: 0;--tw-translate-x: 0;--tw-translate-y: 0;--tw-rotate: 0;--tw-skew-x: 0;--tw-skew-y: 0;--tw-scale-x: 1;--tw-scale-y: 1;--tw-pan-x:  ;--tw-pan-y:  ;--tw-pinch-zoom:  ;--tw-scroll-snap-strictness: proximity;--tw-gradient-from-position:  ;--tw-gradient-via-position:  ;--tw-gradient-to-position:  ;--tw-ordinal:  ;--tw-slashed-zero:  ;--tw-numeric-figure:  ;--tw-numeric-spacing:  ;--tw-numeric-fraction:  ;--tw-ring-inset:  ;--tw-ring-offset-width: 0px;--tw-ring-offset-color: #fff;--tw-ring-color: rgb(59 130 246 / 0.5);--tw-ring-offset-shadow: 0 0 #0000;--tw-ring-shadow: 0 0 #0000;--tw-shadow: 0 0 #0000;--tw-shadow-colored: 0 0 #0000;--tw-blur:  ;--tw-brightness:  ;--tw-contrast:  ;--tw-grayscale:  ;--tw-hue-rotate:  ;--tw-invert:  ;--tw-saturate:  ;--tw-sepia:  ;--tw-drop-shadow:  ;--tw-backdrop-blur:  ;--tw-backdrop-brightness:  ;--tw-backdrop-contrast:  ;--tw-backdrop-grayscale:  ;--tw-backdrop-hue-rotate:  ;--tw-backdrop-invert:  ;--tw-backdrop-opacity:  ;--tw-backdrop-saturate:  ;--tw-backdrop-sepia:  ;--tw-contain-size:  ;--tw-contain-layout:  ;--tw-contain-paint:  ;--tw-contain-style:  ;
+}[type='text'],input:where(:not([type])),[type='email'],[type='url'],[type='password'],[type='number'],[type='date'],[type='datetime-local'],[type='month'],[type='search'],[type='tel'],[type='time'],[type='week'],[multiple],textarea,select {-webkit-appearance: none;appearance: none;background-color: #fff;border-color: #6b7280;border-width: 1px;border-radius: 0px;padding-top: 0.5rem;padding-right: 0.75rem;padding-bottom: 0.5rem;padding-left: 0.75rem;font-size: 1rem;line-height: 1.5rem;--tw-shadow: 0 0 #0000;
+}[type='text']:focus, input:where(:not([type])):focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus, select:focus {outline: 2px solid transparent;outline-offset: 2px;--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);--tw-ring-offset-width: 0px;--tw-ring-offset-color: #fff;--tw-ring-color: #2563eb;--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);border-color: #2563eb;
+}input::placeholder,textarea::placeholder {color: #6b7280;opacity: 1;
+}::-webkit-datetime-edit-fields-wrapper {padding: 0;
+}::-webkit-date-and-time-value {min-height: 1.5em;text-align: inherit;
+}::-webkit-datetime-edit {display: inline-flex;
+}::-webkit-datetime-edit,::-webkit-datetime-edit-year-field,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute-field,::-webkit-datetime-edit-second-field,::-webkit-datetime-edit-millisecond-field,::-webkit-datetime-edit-meridiem-field {padding-top: 0;padding-bottom: 0;
+}select {background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");background-position: right 0.5rem center;background-repeat: no-repeat;background-size: 1.5em 1.5em;padding-right: 2.5rem;print-color-adjust: exact;
+}[multiple],[size]:where(select:not([size="1"])) {background-image: initial;background-position: initial;background-repeat: unset;background-size: initial;padding-right: 0.75rem;print-color-adjust: unset;
+}[type='checkbox'],[type='radio'] {-webkit-appearance: none;appearance: none;padding: 0;print-color-adjust: exact;display: inline-block;vertical-align: middle;background-origin: border-box;-webkit-user-select: none;user-select: none;flex-shrink: 0;height: 1rem;width: 1rem;color: #2563eb;background-color: #fff;border-color: #6b7280;border-width: 1px;--tw-shadow: 0 0 #0000;
+}[type='checkbox'] {border-radius: 0px;
+}[type='radio'] {border-radius: 100%;
+}[type='checkbox']:focus,[type='radio']:focus {outline: 2px solid transparent;outline-offset: 2px;--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);--tw-ring-offset-width: 2px;--tw-ring-offset-color: #fff;--tw-ring-color: #2563eb;--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}[type='checkbox']:checked,[type='radio']:checked {border-color: transparent;background-color: currentColor;background-size: 100% 100%;background-position: center;background-repeat: no-repeat;
+}[type='checkbox']:checked {background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+}@media (forced-colors: active)  {[type='checkbox']:checked {-webkit-appearance: auto;appearance: auto;
+    }
+}[type='radio']:checked {background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+}@media (forced-colors: active)  {[type='radio']:checked {-webkit-appearance: auto;appearance: auto;
+    }
+}[type='checkbox']:checked:hover,[type='checkbox']:checked:focus,[type='radio']:checked:hover,[type='radio']:checked:focus {border-color: transparent;background-color: currentColor;
+}[type='checkbox']:indeterminate {background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3e%3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8h8'/%3e%3c/svg%3e");border-color: transparent;background-color: currentColor;background-size: 100% 100%;background-position: center;background-repeat: no-repeat;
+}@media (forced-colors: active)  {[type='checkbox']:indeterminate {-webkit-appearance: auto;appearance: auto;
+    }
+}[type='checkbox']:indeterminate:hover,[type='checkbox']:indeterminate:focus {border-color: transparent;background-color: currentColor;
+}[type='file'] {background: unset;border-color: inherit;border-width: 0;border-radius: 0;padding: 0;font-size: unset;line-height: inherit;
+}[type='file']:focus {outline: 1px solid ButtonText;outline: 1px auto -webkit-focus-ring-color;
+}.t-pointer-events-none {pointer-events: none;
+}.t-fixed {position: fixed;
+}.t-absolute {position: absolute;
+}.t-relative {position: relative;
+}.t-inset-0 {inset: 0px;
+}.t-left-0 {left: 0px;
+}.t-top-0 {top: 0px;
+}.t-left-2\.5 {left: 0.625rem;
+}.t-right-2 {right: 0.5rem;
+}.t-top-16 {top: 4rem;
+}.t-bottom-\[20px\] {bottom: 20px;
+}.t-left-4 {left: 1rem;
+}.t-top-\[51px\] {top: 51px;
+}.t-bottom-0 {bottom: 0px;
+}.t-right-4 {right: 1rem;
+}.t-z-40 {z-index: 40;
+}.t-z-30 {z-index: 30;
+}.t-z-50 {z-index: 50;
+}.t-mx-2 {margin-left: 0.5rem;margin-right: 0.5rem;
+}.t-mx-auto {margin-left: auto;margin-right: auto;
+}.t-ml-0\.5 {margin-left: 0.125rem;
+}.t-mt-1 {margin-top: 0.25rem;
+}.t-mt-2 {margin-top: 0.5rem;
+}.t-mt-1\.5 {margin-top: 0.375rem;
+}.t-block {display: block;
+}.t-flex {display: flex;
+}.\!t-flex {display: flex !important;
+}.t-grid {display: grid;
+}.t-hidden {display: none;
+}.\!t-hidden {display: none !important;
+}.t-h-16 {height: 4rem;
+}.t-h-full {height: 100%;
+}.t-h-10 {height: 2.5rem;
+}.t-h-8 {height: 2rem;
+}.t-h-9 {height: 2.25rem;
+}.t-h-7 {height: 1.75rem;
+}.t-h-3\.5 {height: 0.875rem;
+}.t-h-2 {height: 0.5rem;
+}.t-h-1\.5 {height: 0.375rem;
+}.t-h-44 {height: 11rem;
+}.t-h-\[952px\] {height: 952px;
+}.t-max-h-\[952px\] {max-height: 952px;
+}.t-min-h-screen {min-height: 100vh;
+}.t-w-full {width: 100%;
+}.t-w-9 {width: 2.25rem;
+}.t-w-auto {width: auto;
+}.t-w-\[270px\] {width: 270px;
+}.t-w-3\.5 {width: 0.875rem;
+}.t-w-2 {width: 0.5rem;
+}.t-w-\[410px\] {width: 410px;
+}.t-w-8 {width: 2rem;
+}.t-w-\[90\%\] {width: 90%;
+}.t-w-7 {width: 1.75rem;
+}.t-min-w-\[84px\] {min-width: 84px;
+}.t-min-w-0 {min-width: 0px;
+}.t-max-w-\[150px\] {max-width: 150px;
+}.t-max-w-\[190px\] {max-width: 190px;
+}.t-max-w-\[95px\] {max-width: 95px;
+}.t-max-w-\[140px\] {max-width: 140px;
+}.t-max-w-full {max-width: 100%;
+}.t-max-w-\[640px\] {max-width: 640px;
+}.t-max-w-\[380px\] {max-width: 380px;
+}.t-max-w-\[390px\] {max-width: 390px;
+}.t-flex-1 {flex: 1 1 0%;
+}.t-shrink-0 {flex-shrink: 0;
+}.t-border-collapse {border-collapse: collapse;
+}.-t-translate-y-8 {--tw-translate-y: -2rem;transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}.-t-translate-x-\[110\%\] {--tw-translate-x: -110%;transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}.t-translate-x-0 {--tw-translate-x: 0px;transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}.t-translate-x-\[110\%\] {--tw-translate-x: 110%;transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}.t-scale-95 {--tw-scale-x: .95;--tw-scale-y: .95;transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}.t-transform {transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}.t-cursor-pointer {cursor: pointer;
+}.t-select-none {-webkit-user-select: none;user-select: none;
+}.t-appearance-none {-webkit-appearance: none;appearance: none;
+}.t-grid-cols-1 {grid-template-columns: repeat(1, minmax(0, 1fr));
+}.t-grid-cols-2 {grid-template-columns: repeat(2, minmax(0, 1fr));
+}.t-flex-col {flex-direction: column;
+}.t-flex-wrap {flex-wrap: wrap;
+}.t-items-start {align-items: flex-start;
+}.t-items-center {align-items: center;
+}.t-items-baseline {align-items: baseline;
+}.t-justify-end {justify-content: flex-end;
+}.t-justify-center {justify-content: center;
+}.t-justify-between {justify-content: space-between;
+}.t-gap-2 {gap: 0.5rem;
+}.t-gap-1 {gap: 0.25rem;
+}.t-gap-3 {gap: 0.75rem;
+}.t-gap-0\.5 {gap: 0.125rem;
+}.t-gap-1\.5 {gap: 0.375rem;
+}.t-gap-2\.5 {gap: 0.625rem;
+}.t-gap-4 {gap: 1rem;
+}.t-gap-x-3 {column-gap: 0.75rem;
+}.t-gap-y-0\.5 {row-gap: 0.125rem;
+}.t-space-y-1\.5 > :not([hidden]) ~ :not([hidden]) {--tw-space-y-reverse: 0;margin-top: calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom: calc(0.375rem * var(--tw-space-y-reverse));
+}.t-space-y-3 > :not([hidden]) ~ :not([hidden]) {--tw-space-y-reverse: 0;margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
+}.t-space-y-4 > :not([hidden]) ~ :not([hidden]) {--tw-space-y-reverse: 0;margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}.t-space-y-2 > :not([hidden]) ~ :not([hidden]) {--tw-space-y-reverse: 0;margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}.t-space-y-1 > :not([hidden]) ~ :not([hidden]) {--tw-space-y-reverse: 0;margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}.t-space-y-5 > :not([hidden]) ~ :not([hidden]) {--tw-space-y-reverse: 0;margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
+}.t-divide-y > :not([hidden]) ~ :not([hidden]) {--tw-divide-y-reverse: 0;border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
+}.t-divide-surface-container > :not([hidden]) ~ :not([hidden]) {--tw-divide-opacity: 1;border-color: rgb(226 238 251 / var(--tw-divide-opacity, 1));
+}.t-overflow-hidden {overflow: hidden;
+}.t-overflow-visible {overflow: visible;
+}.t-overflow-x-auto {overflow-x: auto;
+}.t-overflow-y-auto {overflow-y: auto;
+}.t-rounded-xl {border-radius: 0.75rem;
+}.t-rounded-2xl {border-radius: 1rem;
+}.t-rounded-lg {border-radius: 0.5rem;
+}.t-rounded-full {border-radius: 9999px;
+}.t-rounded-md {border-radius: 0.375rem;
+}.t-rounded {border-radius: 0.25rem;
+}.t-border {border-width: 1px;
+}.t-border-b {border-bottom-width: 1px;
+}.t-border-b-2 {border-bottom-width: 2px;
+}.t-border-t {border-top-width: 1px;
+}.t-border-white\/20 {border-color: rgb(255 255 255 / 0.2);
+}.t-border-white\/30 {border-color: rgb(255 255 255 / 0.3);
+}.t-border-surface-container {--tw-border-opacity: 1;border-color: rgb(226 238 251 / var(--tw-border-opacity, 1));
+}.t-border-slate-100 {--tw-border-opacity: 1;border-color: rgb(241 245 249 / var(--tw-border-opacity, 1));
+}.t-border-\[\#bfdbfe\] {--tw-border-opacity: 1;border-color: rgb(191 219 254 / var(--tw-border-opacity, 1));
+}.t-border-white\/10 {border-color: rgb(255 255 255 / 0.1);
+}.t-bg-background {--tw-bg-opacity: 1;background-color: rgb(240 246 252 / var(--tw-bg-opacity, 1));
+}.t-bg-white\/15 {background-color: rgb(255 255 255 / 0.15);
+}.t-bg-white {--tw-bg-opacity: 1;background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}.t-bg-white\/95 {background-color: rgb(255 255 255 / 0.95);
+}.t-bg-surface-container-low {--tw-bg-opacity: 1;background-color: rgb(240 246 252 / var(--tw-bg-opacity, 1));
+}.t-bg-\[\#0284c7\] {--tw-bg-opacity: 1;background-color: rgb(2 132 199 / var(--tw-bg-opacity, 1));
+}.t-bg-\[\#415141\] {--tw-bg-opacity: 1;background-color: rgb(65 81 65 / var(--tw-bg-opacity, 1));
+}.t-bg-\[\#0d9488\] {--tw-bg-opacity: 1;background-color: rgb(13 148 136 / var(--tw-bg-opacity, 1));
+}.t-bg-\[\#2563eb\] {--tw-bg-opacity: 1;background-color: rgb(37 99 235 / var(--tw-bg-opacity, 1));
+}.t-bg-\[\#ea580c\] {--tw-bg-opacity: 1;background-color: rgb(234 88 12 / var(--tw-bg-opacity, 1));
+}.t-bg-\[\#475569\] {--tw-bg-opacity: 1;background-color: rgb(71 85 105 / var(--tw-bg-opacity, 1));
+}.t-bg-surface-container-low\/60 {background-color: rgb(240 246 252 / 0.6);
+}.t-bg-emerald-500 {--tw-bg-opacity: 1;background-color: rgb(16 185 129 / var(--tw-bg-opacity, 1));
+}.t-bg-surface-container-low\/70 {background-color: rgb(240 246 252 / 0.7);
+}.t-bg-slate-200 {--tw-bg-opacity: 1;background-color: rgb(226 232 240 / var(--tw-bg-opacity, 1));
+}.t-bg-surface-container-low\/50 {background-color: rgb(240 246 252 / 0.5);
+}.t-bg-emerald-100 {--tw-bg-opacity: 1;background-color: rgb(209 250 229 / var(--tw-bg-opacity, 1));
+}.t-bg-surface-container-low\/30 {background-color: rgb(240 246 252 / 0.3);
+}.t-bg-sky-100 {--tw-bg-opacity: 1;background-color: rgb(224 242 254 / var(--tw-bg-opacity, 1));
+}.t-bg-sky-500 {--tw-bg-opacity: 1;background-color: rgb(14 165 233 / var(--tw-bg-opacity, 1));
+}.t-bg-amber-100 {--tw-bg-opacity: 1;background-color: rgb(254 243 199 / var(--tw-bg-opacity, 1));
+}.t-bg-amber-500 {--tw-bg-opacity: 1;background-color: rgb(245 158 11 / var(--tw-bg-opacity, 1));
+}.t-bg-purple-500 {--tw-bg-opacity: 1;background-color: rgb(168 85 247 / var(--tw-bg-opacity, 1));
+}.t-bg-slate-100 {--tw-bg-opacity: 1;background-color: rgb(241 245 249 / var(--tw-bg-opacity, 1));
+}.t-bg-slate-900\/40 {background-color: rgb(15 23 42 / 0.4);
+}.t-bg-\[\#eff6ff\] {--tw-bg-opacity: 1;background-color: rgb(239 246 255 / var(--tw-bg-opacity, 1));
+}.t-object-contain {object-fit: contain;
+}.t-p-3\.5 {padding: 0.875rem;
+}.t-p-2 {padding: 0.5rem;
+}.t-p-2\.5 {padding: 0.625rem;
+}.t-p-3 {padding: 0.75rem;
+}.t-p-4 {padding: 1rem;
+}.t-p-0\.5 {padding: 0.125rem;
+}.t-px-3 {padding-left: 0.75rem;padding-right: 0.75rem;
+}.t-px-2\.5 {padding-left: 0.625rem;padding-right: 0.625rem;
+}.t-py-1 {padding-top: 0.25rem;padding-bottom: 0.25rem;
+}.t-py-1\.5 {padding-top: 0.375rem;padding-bottom: 0.375rem;
+}.t-px-4 {padding-left: 1rem;padding-right: 1rem;
+}.t-px-2 {padding-left: 0.5rem;padding-right: 0.5rem;
+}.t-py-0\.5 {padding-top: 0.125rem;padding-bottom: 0.125rem;
+}.t-px-1 {padding-left: 0.25rem;padding-right: 0.25rem;
+}.t-px-3\.5 {padding-left: 0.875rem;padding-right: 0.875rem;
+}.t-py-2\.5 {padding-top: 0.625rem;padding-bottom: 0.625rem;
+}.t-py-2 {padding-top: 0.5rem;padding-bottom: 0.5rem;
+}.t-pl-8 {padding-left: 2rem;
+}.t-pr-7 {padding-right: 1.75rem;
+}.t-pb-32 {padding-bottom: 8rem;
+}.t-pt-28 {padding-top: 7rem;
+}.t-pb-0 {padding-bottom: 0px;
+}.t-pt-2 {padding-top: 0.5rem;
+}.t-pb-1 {padding-bottom: 0.25rem;
+}.t-pt-1\.5 {padding-top: 0.375rem;
+}.t-pt-1 {padding-top: 0.25rem;
+}.t-pb-\[20px\] {padding-bottom: 20px;
+}.t-pt-\[51px\] {padding-top: 51px;
+}.t-text-left {text-align: left;
+}.t-text-center {text-align: center;
+}.t-text-right {text-align: right;
+}.t-font-sans {font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Hiragino Sans", "BIZ UDPGothic", Meiryo, sans-serif;
+}.t-font-mono {font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}.t-text-\[14px\] {font-size: 14px;
+}.t-text-\[12px\] {font-size: 12px;
+}.t-text-\[17px\] {font-size: 17px;
+}.t-text-\[11px\] {font-size: 11px;
+}.t-text-\[13px\] {font-size: 13px;
+}.t-text-\[20px\] {font-size: 20px;
+}.t-text-\[19px\] {font-size: 19px;
+}.t-text-\[10px\] {font-size: 10px;
+}.t-text-\[18px\] {font-size: 18px;
+}.t-text-\[22px\] {font-size: 22px;
+}.t-text-\[16px\] {font-size: 16px;
+}.t-font-semibold {font-weight: 600;
+}.t-font-bold {font-weight: 700;
+}.t-font-medium {font-weight: 500;
+}.t-font-normal {font-weight: 400;
+}.t-leading-relaxed {line-height: 1.625;
+}.t-tracking-tight {letter-spacing: -0.025em;
+}.t-text-on-surface {--tw-text-opacity: 1;color: rgb(15 23 42 / var(--tw-text-opacity, 1));
+}.t-text-white {--tw-text-opacity: 1;color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}.t-text-white\/80 {color: rgb(255 255 255 / 0.8);
+}.t-text-slate-800 {--tw-text-opacity: 1;color: rgb(30 41 59 / var(--tw-text-opacity, 1));
+}.t-text-outline {--tw-text-opacity: 1;color: rgb(100 116 139 / var(--tw-text-opacity, 1));
+}.t-text-emerald-700 {--tw-text-opacity: 1;color: rgb(4 120 87 / var(--tw-text-opacity, 1));
+}.t-text-on-surface-variant {--tw-text-opacity: 1;color: rgb(51 65 85 / var(--tw-text-opacity, 1));
+}.t-text-emerald-600 {--tw-text-opacity: 1;color: rgb(5 150 105 / var(--tw-text-opacity, 1));
+}.t-text-sky-600 {--tw-text-opacity: 1;color: rgb(2 132 199 / var(--tw-text-opacity, 1));
+}.t-text-sky-700 {--tw-text-opacity: 1;color: rgb(3 105 161 / var(--tw-text-opacity, 1));
+}.t-text-amber-800 {--tw-text-opacity: 1;color: rgb(146 64 14 / var(--tw-text-opacity, 1));
+}.t-text-slate-700 {--tw-text-opacity: 1;color: rgb(51 65 85 / var(--tw-text-opacity, 1));
+}.t-text-\[\#e0f2fe\] {--tw-text-opacity: 1;color: rgb(224 242 254 / var(--tw-text-opacity, 1));
+}.t-text-white\/90 {color: rgb(255 255 255 / 0.9);
+}.t-antialiased {-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;
+}.t-opacity-0 {opacity: 0;
+}.t-shadow-md {--tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}.t-shadow-sm {--tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}.t-shadow-\[0_16px_48px_rgba\(2\,132\,199\,0\.28\)\] {--tw-shadow: 0 16px 48px rgba(2,132,199,0.28);--tw-shadow-colored: 0 16px 48px var(--tw-shadow-color);box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}.t-shadow-\[0_12px_40px_rgba\(2\,132\,199\,0\.25\)\] {--tw-shadow: 0 12px 40px rgba(2,132,199,0.25);--tw-shadow-colored: 0 12px 40px var(--tw-shadow-color);box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}.t-shadow-lg {--tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}.t-backdrop-blur-md {--tw-backdrop-blur: blur(12px);-webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}.t-backdrop-blur {--tw-backdrop-blur: blur(8px);-webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}.t-transition-colors {transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);transition-duration: 150ms;
+}.t-transition-all {transition-property: all;transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);transition-duration: 150ms;
+}.t-transition-opacity {transition-property: opacity;transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);transition-duration: 150ms;
+}.t-transition-transform {transition-property: transform;transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);transition-duration: 150ms;
+}.t-duration-200 {transition-duration: 200ms;
+}.t-duration-300 {transition-duration: 300ms;
+}.hover\:t-bg-white\/25:hover {background-color: rgb(255 255 255 / 0.25);
+}.hover\:t-bg-surface-container-low:hover {--tw-bg-opacity: 1;background-color: rgb(240 246 252 / var(--tw-bg-opacity, 1));
+}.hover\:t-bg-surface-container:hover {--tw-bg-opacity: 1;background-color: rgb(226 238 251 / var(--tw-bg-opacity, 1));
+}.hover\:t-bg-surface-container-low\/40:hover {background-color: rgb(240 246 252 / 0.4);
+}.hover\:t-text-on-surface:hover {--tw-text-opacity: 1;color: rgb(15 23 42 / var(--tw-text-opacity, 1));
+}.hover\:t-underline:hover {-webkit-text-decoration-line: underline;text-decoration-line: underline;
+}.hover\:t-shadow-md:hover {--tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}.focus\:t-border-white:focus {--tw-border-opacity: 1;border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
+}.focus\:t-ring-2:focus {--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}.focus\:t-ring-white\/30:focus {--tw-ring-color: rgb(255 255 255 / 0.3);
+}.active\:t-scale-95:active {--tw-scale-x: .95;--tw-scale-y: .95;transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}@media (min-width: 640px) {.sm\:t-inline {display: inline;
+    }.sm\:t-h-8 {height: 2rem;
+    }.sm\:t-h-48 {height: 12rem;
+    }.sm\:t-min-w-\[100px\] {min-width: 100px;
+    }.sm\:t-max-w-none {max-width: none;
+    }.sm\:t-max-w-\[115px\] {max-width: 115px;
+    }.sm\:t-flex-col {flex-direction: column;
+    }.sm\:t-gap-3 {gap: 0.75rem;
+    }.sm\:t-gap-2\.5 {gap: 0.625rem;
+    }.sm\:t-gap-6 {gap: 1.5rem;
+    }.sm\:t-p-6 {padding: 1.5rem;
+    }.sm\:t-px-5 {padding-left: 1.25rem;padding-right: 1.25rem;
+    }.sm\:t-px-6 {padding-left: 1.5rem;padding-right: 1.5rem;
+    }.sm\:t-px-4 {padding-left: 1rem;padding-right: 1rem;
+    }.sm\:t-text-\[13px\] {font-size: 13px;
+    }.sm\:t-text-\[21px\] {font-size: 21px;
+    }
+}@media (min-width: 768px) {.md\:t-flex {display: flex;
+    }.md\:t-hidden {display: none;
+    }
+}@media (min-width: 1024px) {.lg\:t-flex {display: flex;
+    }.lg\:t-hidden {display: none;
+    }.lg\:t-grid-cols-4 {grid-template-columns: repeat(4, minmax(0, 1fr));
+    }.lg\:t-gap-4 {gap: 1rem;
+    }.lg\:t-px-6 {padding-left: 1.5rem;padding-right: 1.5rem;
+    }
+}</style></head>
+<body class="t-bg-background t-font-sans t-text-on-surface t-antialiased t-text-[14px] t-leading-relaxed t-select-none">
+<!-- ================= TOP NAVIGATION HEADER ================= -->
+<header class="t-fixed t-top-0 t-left-0 t-w-full t-z-40 t-transition-colors t-duration-200 t-text-white t-shadow-md t-h-16 t-border-b t-border-white/20 navheader" id="navheader" style="background-color: var(--primary-dark);"><div class="t-h-full t-w-full t-px-3 sm:t-px-5 t-flex t-items-center t-justify-between t-gap-2">
+<!-- Left Group: ロゴ最左 -> 左ハンバーガー -> 画面サイズ切替 -->
+<div class="t-flex t-items-center t-gap-2 sm:t-gap-3 t-shrink-0">
+<div class="site-logo-wrapper t-flex t-items-center t-bg-white/15 hover:t-bg-white/25 t-backdrop-blur-md t-px-2.5 t-py-1 t-rounded-xl t-shadow-sm t-border t-border-white/30 t-h-10 t-transition-all t-cursor-pointer">
+<img alt="立川錦 Tachikawa Nishiki ロゴ" class="site-logo-img t-h-8 t-w-auto t-max-w-[150px] t-object-contain t-select-none" onerror="this.onerror=null;
+  this.src='https://cf363068.cloudfree.jp/modx/img/site_logo_t.png';"
+  src="https://cf363068.cloudfree.jp/modx/img/site_logo_t.png">
+</div>
+<button aria-label="左メニューを開閉" class="lg:t-hidden t-flex t-items-center t-justify-center t-w-9 t-h-9 t-rounded-xl t-bg-white/15 hover:t-bg-white/25 active:t-scale-95 t-text-white t-border t-border-white/30 t-transition-all t-shadow-xs t-cursor-pointer t-shrink-0 !t-flex" id="header-left-drawer-btn" title="左メニュー開閉" type="button">
+<div class="hamburger-icon-box" id="hamburger-icon-wrapper">
+<span class="hamburger-line line-top"></span>
+<span class="hamburger-line line-middle"></span>
+<span class="hamburger-line line-bottom"></span>
+</div>
+</button>
+<div class="t-relative t-flex t-items-center">
+<div class="t-absolute t-left-2.5 t-pointer-events-none t-text-white/80 t-flex t-items-center">
+<span class="material-symbols-outlined t-text-[17px]">devices</span>
+</div>
+<select aria-label="画面サイズ切り替え" class="t-appearance-none t-pl-8 t-pr-7 t-py-1.5 t-rounded-xl t-bg-white/15 hover:t-bg-white/25 t-border t-border-white/30 focus:t-border-white focus:t-ring-2 focus:t-ring-white/30 t-text-white t-text-[12px] t-font-semibold t-cursor-pointer t-transition-all t-shadow-xs t-max-w-[190px] sm:t-max-w-none" id="header-screen-size-select">
+<option class="t-text-slate-800 t-bg-white" selected="" value="auto">画面サイズ: 自動 (Auto)</option>
+<option class="t-text-slate-800 t-bg-white" value="pc">画面サイズ: PC (1280px+)</option>
+<option class="t-text-slate-800 t-bg-white" value="tablet">画面サイズ: タブレット (768px)</option>
+<option class="t-text-slate-800 t-bg-white" value="mobile">画面サイズ: スマホ (375px)</option>
+</select>
+<div class="t-absolute t-right-2 t-pointer-events-none t-text-white/80 t-flex t-items-center">
+<span class="material-symbols-outlined t-text-[17px]">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Center Group: センタードロワー展開ボタン (bg-white/15 hover:bg-white/25 通常ボタン・下矢印なし) -->
+<div class="t-flex t-items-center t-justify-center t-flex-1 t-mx-2">
+<button aria-expanded="false" aria-label="クイックアクセス センタードロワーを開閉" class="group t-relative t-flex t-items-center t-justify-center t-px-3 t-py-1 t-rounded-xl t-bg-white/15 hover:t-bg-white/25 t-text-white t-border t-border-white/30 t-shadow-xs hover:t-shadow-md t-transition-all t-duration-200 t-cursor-pointer active:t-scale-95 t-h-10 t-min-w-[84px] sm:t-min-w-[100px]" id="header-center-drawer-btn" type="button">
+<!-- 非アクティブ時: LitLink 画像 (下矢印なし) -->
+<div class="t-flex t-items-center t-justify-center t-transition-opacity t-duration-200" id="center-btn-state-closed">
+<img alt="LitLink" class="t-h-7 sm:t-h-8 t-w-auto t-max-w-[95px] sm:t-max-w-[115px] t-object-contain t-select-none" onerror="this.onerror=null;
+ this.src='https://cf363068.cloudfree.jp/modx/img/LitLink_t.png';"
+ src="https://cf363068.cloudfree.jp/modx/img/LitLink_t.png">
+</div>
+<!-- アクティブ(開状態)時: クローズ[×]アイコン -->
+<div class="t-hidden t-items-center t-justify-center t-gap-1 t-text-white t-font-bold t-text-[13px] t-transition-opacity t-duration-200" id="center-btn-state-open">
+<span class="material-symbols-outlined t-text-[20px] t-text-white">close</span>
+<span class="t-text-[11px] t-font-semibold t-text-white t-hidden sm:t-inline">閉じる</span>
+</div>
+</button>
+</div>
+<!-- Right Group: テーマ切替 -> 通知/ユーザーアバター -> 右ハンバーガーメニュー -->
+<div class="t-flex t-items-center t-gap-2 sm:t-gap-2.5 t-shrink-0 t-justify-end">
+<div class="t-relative t-flex t-items-center">
+<div class="t-absolute t-left-2.5 t-pointer-events-none t-text-white/80 t-flex t-items-center">
+<span class="material-symbols-outlined t-text-[17px]">palette</span>
+</div>
+<select aria-label="カラーテーマ切り替え" class="t-appearance-none t-pl-8 t-pr-7 t-py-1.5 t-rounded-xl t-bg-white/15 hover:t-bg-white/25 t-border t-border-white/30 focus:t-border-white focus:t-ring-2 focus:t-ring-white/30 t-text-white t-text-[12px] t-font-semibold t-cursor-pointer t-transition-all t-shadow-xs t-max-w-[140px] sm:t-max-w-none" id="header-theme-select">
+<option class="t-text-slate-800 t-bg-white" selected="" value="sorairo">深空色 (Sorairo)</option>
+<option class="t-text-slate-800 t-bg-white" value="modx">modx用</option>
+<option class="t-text-slate-800 t-bg-white" value="asagi">浅葱色 (Asagi)</option>
+<option class="t-text-slate-800 t-bg-white" value="ruri">瑠璃色 (Ruri)</option>
+<option class="t-text-slate-800 t-bg-white" value="yuakane">夕茜 (Yuakane)</option>
+<option class="t-text-slate-800 t-bg-white" value="sumi">墨色 (Sumi)</option>
+</select>
+<div class="t-absolute t-right-2 t-pointer-events-none t-text-white/80 t-flex t-items-center">
+<span class="material-symbols-outlined t-text-[17px]">expand_more</span>
+</div>
+</div>
+<button aria-label="右メニューを開閉" class="t-flex md:t-hidden t-items-center t-justify-center t-w-9 t-h-9 t-rounded-xl t-bg-white/15 hover:t-bg-white/25 active:t-scale-95 t-text-white t-border t-border-white/30 t-transition-all t-shadow-xs t-cursor-pointer t-shrink-0 t-ml-0.5 !t-flex" id="header-right-drawer-btn" title="右ドロワー開閉" type="button">
+<div class="hamburger-icon-box" id="right-hamburger-icon-wrapper">
+<span class="hamburger-line line-top"></span>
+<span class="hamburger-line line-middle"></span>
+<span class="hamburger-line line-bottom"></span>
+</div>
+</button>
+</div>
+</div></header>
+<!-- ================= SUB HEADER / WORKSPACE STATUS BAR ================= -->
+<section class="t-left-0 t-w-full t-z-30 t-bg-white/95 t-backdrop-blur t-border-b t-border-surface-container t-px-4 sm:t-px-6 t-flex t-items-center t-shadow-xs infoheader" id="infoheader" style="height: 120px; margin-top: 64px;"><div class="scroll-list-container" id="scroll-container" style="height: 100%;"><ul class="scroll-list" style="animation: scroll-left 8s linear infinite;"><li style="font-size: 26px; font-weight: 700; white-space: nowrap;" class="">[MODX用フルレスポンスのデザインテンプレート]</li><li style="font-size: 26px; font-weight: 700; white-space: nowrap;" class="">[2026/10の最新版MODXに対応(1.2.4J)]</li><li style="font-size: 26px; font-weight: 700; white-space: nowrap;" class="">[Google stitchを利用して高速手軽にデザイン生成する試験]</li><li style="font-size: 26px; font-weight: 700; white-space: nowrap;" class="">[ajaxも利用可能。jamstackにも高度対応。SSG出力こそ元より得意]</li></ul></div></section>
+<!-- ================= MULTI-PANE WORKSPACE WRAPPER ================= -->
+<div class="t-pt-28 t-pb-32 t-min-h-screen t-w-full t-flex t-justify-center t-bg-background t-px-2 sm:t-px-4 lg:t-px-6" id="layout-root" style="padding-top: 24px;">
+<div class="t-w-full t-flex t-justify-center t-transition-all t-duration-300 t-max-w-full t-max-w-[390px] t-mx-auto" id="sim-outer-container">
+<div class="t-w-full t-flex t-items-start t-gap-3 lg:t-gap-4 t-transition-all t-duration-300 t-max-w-full" id="pane-flex-container">
+<!-- ================= 1. LEFT PANE (表示設定・吹き出しタブ付き) ================= -->
+<aside class="t-w-[270px] t-shrink-0 t-bg-white t-rounded-2xl t-border t-border-surface-container t-shadow-xs t-flex-col t-overflow-hidden t-transition-all t-duration-300 !t-hidden" id="docked-left-pane">
+<!-- Pane Header -->
+<div class="t-p-3.5 t-border-b t-border-surface-container t-flex t-items-center t-justify-between" style="background-color: var(--color-primary-light, var(--primary-light, #e0f2fe)); border-color: var(--color-border, var(--outline-variant, #cbd5e1));"><div class="t-flex t-items-center t-gap-2"><span class="material-symbols-outlined t-text-[19px]" style="color: var(--primary-color);">tune</span><h2 class="t-text-[13px] t-font-bold t-text-on-surface">表示設定</h2></div></div>
+<!-- Pane Tabs (Speech Bubble 吹き出しタブスタイル) -->
+<div class="t-flex t-items-center t-px-2 t-pt-2 t-pb-0 t-bg-surface-container-low t-border-b-2 t-border-surface-container t-text-[11px] t-gap-1 t-relative"><button class="bubble-tab-btn left-tab-btn active t-flex-1 t-py-1.5 t-px-2 t-text-center t-cursor-pointer t-transition-all" data-pane-target="mdx-gmenu" type="button">メニュー</button><button class="bubble-tab-btn left-tab-btn t-flex-1 t-py-1.5 t-px-2 t-text-center t-cursor-pointer t-transition-all" data-pane-target="left-subpane-theme" type="button">カラー</button><button class="bubble-tab-btn left-tab-btn t-flex-1 t-py-1.5 t-px-2 t-text-center t-cursor-pointer t-transition-all" data-pane-target="mdx-performance" type="button">性能</button></div>
+<!-- Tab Content: 表示サイズ指定 -->
+<div class="left-subpane t-flex t-flex-col t-p-3.5 t-space-y-4" id="mdx-gmenu"><div class="t-space-y-3"><div class="t-font-bold t-text-[12px] t-text-on-surface t-border-b t-border-surface-container t-pb-1">ドメイン・ポータルメニュー</div><ul class="t-space-y-1.5 t-text-[12px]"><li class=""><a class="t-flex t-items-center t-gap-2 t-p-2 t-rounded-lg hover:t-bg-surface-container-low t-transition-colors" href="#"><span class="material-symbols-outlined t-text-[17px]" style="color: var(--primary-color);">home</span><span class="">ホームポータル</span></a></li><li class=""><a class="t-flex t-items-center t-gap-2 t-p-2 t-rounded-lg hover:t-bg-surface-container-low t-transition-colors" href="#"><span class="material-symbols-outlined t-text-[17px]" style="color: var(--primary-color);">school</span><span class="">個別指導レッスン案内</span></a></li><li class=""><a class="t-flex t-items-center t-gap-2 t-p-2 t-rounded-lg hover:t-bg-surface-container-low t-transition-colors" href="#"><span class="material-symbols-outlined t-text-[17px]" style="color: var(--primary-color);">piano</span><span class="">保有楽器・設備一覧</span></a></li><li class=""><a class="t-flex t-items-center t-gap-2 t-p-2 t-rounded-lg hover:t-bg-surface-container-low t-transition-colors" href="#"><span class="material-symbols-outlined t-text-[17px]" style="color: var(--primary-color);">military_tech</span><span class="">受賞歴・演奏コンクール実績</span></a></li><li class=""><a class="t-flex t-items-center t-gap-2 t-p-2 t-rounded-lg hover:t-bg-surface-container-low t-transition-colors" href="#"><span class="material-symbols-outlined t-text-[17px]" style="color: var(--primary-color);">mail</span><span class="">お問い合わせ・体験申込</span></a></li></ul></div></div>
+<!-- Tab Content: テーマ切り替え -->
+<div class="left-subpane t-hidden t-flex-col t-p-3.5 t-space-y-3" id="left-subpane-theme">
+<span class="t-text-[12px] t-font-bold t-text-on-surface">カラーテーマ選択</span>
+<div class="t-grid t-grid-cols-1 t-gap-2 t-text-[11px]">
+<button class="t-p-2.5 t-rounded-xl t-border t-border-surface-container t-bg-surface-container-low hover:t-bg-surface-container t-flex t-items-center t-justify-between t-cursor-pointer" onclick="document.getElementById('header-theme-select').value='sorairo'; document.getElementById('header-theme-select').dispatchEvent(new Event('change'));" type="button">
+<div class="t-flex t-items-center t-gap-2">
+<span class="t-w-3.5 t-h-3.5 t-rounded-full t-bg-[#0284c7]"></span>
+<span class="t-font-bold">深空色 (Sorairo)</span>
+</div>
+<span class="t-text-[10px] t-text-outline">標準ブルー</span>
+</button>
+<button class="t-p-2.5 t-rounded-xl t-border t-border-surface-container t-bg-surface-container-low hover:t-bg-surface-container t-flex t-items-center t-justify-between t-cursor-pointer" onclick="document.getElementById('header-theme-select').value='modx'; document.getElementById('header-theme-select').dispatchEvent(new Event('change'));" type="button">
+<div class="t-flex t-items-center t-gap-2">
+<span class="t-w-3.5 t-h-3.5 t-rounded-full t-bg-[#415141]"></span>
+<span class="t-font-bold">modx用</span>
+</div>
+<span class="t-text-[10px] t-text-outline">オリーブグリーン</span>
+</button>
+<button class="t-p-2.5 t-rounded-xl t-border t-border-surface-container t-bg-surface-container-low hover:t-bg-surface-container t-flex t-items-center t-justify-between t-cursor-pointer" onclick="document.getElementById('header-theme-select').value='asagi'; document.getElementById('header-theme-select').dispatchEvent(new Event('change'));" type="button">
+<div class="t-flex t-items-center t-gap-2">
+<span class="t-w-3.5 t-h-3.5 t-rounded-full t-bg-[#0d9488]"></span>
+<span class="t-font-bold">浅葱色 (Asagi)</span>
+</div>
+<span class="t-text-[10px] t-text-outline">ティール</span>
+</button>
+<button class="t-p-2.5 t-rounded-xl t-border t-border-surface-container t-bg-surface-container-low hover:t-bg-surface-container t-flex t-items-center t-justify-between t-cursor-pointer" onclick="document.getElementById('header-theme-select').value='ruri'; document.getElementById('header-theme-select').dispatchEvent(new Event('change'));" type="button">
+<div class="t-flex t-items-center t-gap-2">
+<span class="t-w-3.5 t-h-3.5 t-rounded-full t-bg-[#2563eb]"></span>
+<span class="t-font-bold">瑠璃色 (Ruri)</span>
+</div>
+<span class="t-text-[10px] t-text-outline">ディープブルー</span>
+</button>
+<button class="t-p-2.5 t-rounded-xl t-border t-border-surface-container t-bg-surface-container-low hover:t-bg-surface-container t-flex t-items-center t-justify-between t-cursor-pointer" onclick="document.getElementById('header-theme-select').value='yuakane'; document.getElementById('header-theme-select').dispatchEvent(new Event('change'));" type="button">
+<div class="t-flex t-items-center t-gap-2">
+<span class="t-w-3.5 t-h-3.5 t-rounded-full t-bg-[#ea580c]"></span>
+<span class="t-font-bold">夕茜 (Yuakane)</span>
+</div>
+<span class="t-text-[10px] t-text-outline">アンバー</span>
+</button>
+<button class="t-p-2.5 t-rounded-xl t-border t-border-surface-container t-bg-surface-container-low hover:t-bg-surface-container t-flex t-items-center t-justify-between t-cursor-pointer" onclick="document.getElementById('header-theme-select').value='sumi'; document.getElementById('header-theme-select').dispatchEvent(new Event('change'));" type="button">
+<div class="t-flex t-items-center t-gap-2">
+<span class="t-w-3.5 t-h-3.5 t-rounded-full t-bg-[#475569]"></span>
+<span class="t-font-bold">墨色 (Sumi)</span>
+</div>
+<span class="t-text-[10px] t-text-outline">モノトーン</span>
+</button>
+</div>
+</div>
+<!-- Tab Content: 機能B -->
+<div class="left-subpane t-hidden t-flex-col t-p-3.5 t-space-y-3" id="mdx-performance"><div class="t-space-y-3"><div class="t-flex t-items-center t-justify-between"><span class="t-text-[12px] t-font-bold t-text-on-surface">ブラウザ表示サイズ計測</span><button class="t-text-[11px] t-font-semibold hover:t-underline t-flex t-items-center t-gap-0.5" onclick="updateBrowserViewSize()" style="color: var(--primary-color);" type="button"><span class="material-symbols-outlined t-text-[14px]">sync</span>更新</button></div><div class="t-bg-surface-container-low/60 t-p-3 t-rounded-xl t-border t-border-surface-container t-space-y-2" id="browser-view-size"><div class="t-flex t-items-center t-justify-between t-text-[11px]"><span class="t-text-outline">window.innerWidth</span><span class="t-font-mono t-font-bold t-text-on-surface" id="bvs-inner-w">-</span></div><div class="t-flex t-items-center t-justify-between t-text-[11px]"><span class="t-text-outline">window.innerHeight</span><span class="t-font-mono t-font-bold t-text-on-surface" id="bvs-inner-h">-</span></div><div class="t-flex t-items-center t-justify-between t-text-[11px] t-border-t t-border-surface-container t-pt-1.5"><span class="t-text-outline">window.outerWidth</span><span class="t-font-mono t-font-bold t-text-on-surface" id="bvs-outer-w">-</span></div><div class="t-flex t-items-center t-justify-between t-text-[11px]"><span class="t-text-outline">window.outerHeight</span><span class="t-font-mono t-font-bold t-text-on-surface" id="bvs-outer-h">-</span></div></div><div class="t-space-y-2" id="DB-performance"><span class="t-text-[12px] t-font-bold t-text-on-surface t-block">DB・システム性能 (7指標)</span><div class="t-bg-surface-container-low/60 t-p-3 t-rounded-xl t-border t-border-surface-container t-space-y-1.5 t-text-[11px]"><div class="t-flex t-items-center t-justify-between"><span class="t-text-outline">1. クエリ応答速度</span><span class="t-font-mono t-font-bold t-text-on-surface"></span></div><div class="t-flex t-items-center t-justify-between"><span class="t-text-outline">2. コネクションプール数</span><span class="t-font-mono t-font-bold t-text-on-surface"></span></div><div class="t-flex t-items-center t-justify-between"><span class="t-text-outline">3. キャッシュヒット率</span><span class="t-font-mono t-font-bold t-text-emerald-700"></span></div><div class="t-flex t-items-center t-justify-between"><span class="t-text-outline">4. バッファプール使用量</span><span class="t-font-mono t-font-bold t-text-on-surface"></span></div><div class="t-flex t-items-center t-justify-between"><span class="t-text-outline">5. スロークエリ検出数</span><span class="t-font-mono t-font-bold t-text-emerald-700"></span></div><div class="t-flex t-items-center t-justify-between"><span class="t-text-outline">6. レプリケーション遅延</span><span class="t-font-mono t-font-bold t-text-on-surface"></span></div><div class="t-flex t-items-center t-justify-between"><span class="t-text-outline">7. I/O レイテンシ</span><span class="t-font-mono t-font-bold t-text-on-surface"></span></div></div></div></div></div>
+</aside>
+<!-- ================= 2. CENTER MAIN PANE (flex-1) ================= -->
+<main class="t-flex-1 t-min-w-0 t-bg-white t-rounded-2xl t-border t-border-surface-container t-shadow-xs t-p-4 sm:t-p-6 t-space-y-5 t-transition-all t-duration-300" id="center-main-pane">
+<!-- Top Breadcrumb & Status -->
+<div class="t-flex t-items-center t-border-b t-border-surface-container t-pb-1"><span class="t-w-2 t-h-2 t-rounded-full t-bg-emerald-500"></span></div>
+<!-- Main Dashboard Title -->
+<div class="t-space-y-1">
+<h1 class="t-text-[18px] sm:t-text-[21px] t-font-bold t-text-on-surface t-tracking-tight">クラウドオペレーション統括ボード</h1>
+<p class="t-text-[12px] sm:t-text-[13px] t-text-on-surface-variant">クラウドリソース状況の統合モニタリング、クラスター負荷分散、および進行中タスクの即時ステータス管理</p>
+</div>
+<!-- 4-Card Metrics Grid -->
+<div class="t-grid t-grid-cols-2 lg:t-grid-cols-4 t-gap-3">
+<!-- Card 1 -->
+<div class="t-p-3.5 t-rounded-xl t-border t-border-surface-container t-bg-surface-container-low/70 t-flex t-flex-col t-justify-between">
+<div class="t-flex t-items-center t-justify-between t-text-outline">
+<span class="t-text-[11px] t-font-medium">総プロジェクト数</span>
+<span class="material-symbols-outlined t-text-[18px]" style="color: var(--primary-color);">folder_open</span>
+</div>
+<div class="t-mt-2 t-flex t-items-baseline t-gap-2">
+<span class="t-text-[22px] t-font-bold t-text-on-surface t-font-mono">24</span>
+<span class="t-text-[10px] t-text-emerald-600 t-font-bold">+2件 今月</span>
+</div>
+<div class="t-text-[10px] t-text-outline t-mt-1">アクティブ稼働クラスター</div>
+</div>
+<!-- Card 2 -->
+<div class="t-p-3.5 t-rounded-xl t-border t-border-surface-container t-bg-surface-container-low/70 t-flex t-flex-col t-justify-between">
+<div class="t-flex t-items-center t-justify-between t-text-outline">
+<span class="t-text-[11px] t-font-medium">アクティブユーザー</span>
+<span class="material-symbols-outlined t-text-[18px]" style="color: var(--primary-color);">group</span>
+</div>
+<div class="t-mt-2 t-flex t-items-baseline t-gap-2">
+<span class="t-text-[22px] t-font-bold t-text-on-surface t-font-mono">1,420</span>
+<span class="t-text-[10px] t-text-emerald-600 t-font-bold">↑ 12%</span>
+</div>
+<div class="t-text-[10px] t-text-outline t-mt-1">同時セッション中</div>
+</div>
+<!-- Card 3 -->
+<div class="t-p-3.5 t-rounded-xl t-border t-border-surface-container t-bg-surface-container-low/70 t-flex t-flex-col t-justify-between">
+<div class="t-flex t-items-center t-justify-between t-text-outline">
+<span class="t-text-[11px] t-font-medium">リソース使用率</span>
+<span class="material-symbols-outlined t-text-[18px]" style="color: var(--primary-color);">memory</span>
+</div>
+<div class="t-mt-2 t-flex t-items-baseline t-gap-2">
+<span class="t-text-[22px] t-font-bold t-text-on-surface t-font-mono">42%</span>
+<span class="t-text-[10px] t-text-sky-600 t-font-medium">安定</span>
+</div>
+<div class="t-w-full t-bg-slate-200 t-h-1.5 t-rounded-full t-mt-1.5 t-overflow-hidden">
+<div class="t-h-full t-rounded-full" style="width: 42%; background-color: var(--primary-color);"></div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="t-p-3.5 t-rounded-xl t-border t-border-surface-container t-bg-surface-container-low/70 t-flex t-flex-col t-justify-between">
+<div class="t-flex t-items-center t-justify-between t-text-outline">
+<span class="t-text-[11px] t-font-medium">稼働ステータス</span>
+<span class="material-symbols-outlined t-text-[18px] t-text-emerald-600">check_circle</span>
+</div>
+<div class="t-mt-2 t-flex t-items-baseline t-gap-1.5">
+<span class="t-text-[17px] t-font-bold t-text-emerald-700">正常稼働中</span>
+</div>
+<div class="t-text-[10px] t-text-emerald-600 t-font-medium t-mt-1">SLA 99.98% 達成中</div>
+</div>
+</div>
+<!-- クラウドリクエスト推移エリア (Chart) -->
+<div class="t-p-4 t-rounded-xl t-border t-border-surface-container t-bg-white t-flex t-flex-col t-gap-3">
+<div class="t-flex t-flex-wrap t-items-center t-justify-between t-gap-2">
+<div class="t-flex t-items-center t-gap-2">
+<span class="material-symbols-outlined t-text-[18px]" style="color: var(--primary-color);">monitoring</span>
+<h3 class="t-text-[13px] t-font-bold t-text-on-surface">クラウドリクエスト推移</h3>
+<span class="t-text-[11px] t-text-outline t-font-normal">（リアルタイムAPIコール量）</span>
+</div>
+<!-- タイムレンジ切替 -->
+<div class="t-flex t-bg-surface-container-low t-p-0.5 t-rounded-lg t-border t-border-surface-container t-text-[11px] t-font-medium">
+<button class="t-px-2.5 t-py-0.5 t-rounded-md t-text-white t-font-bold t-transition-all" style="background-color: var(--primary-color);">24時間</button>
+<button class="t-px-2.5 t-py-0.5 t-rounded-md t-text-on-surface-variant hover:t-text-on-surface t-transition-all">7日間</button>
+<button class="t-px-2.5 t-py-0.5 t-rounded-md t-text-on-surface-variant hover:t-text-on-surface t-transition-all">30日間</button>
+</div>
+</div>
+<!-- 滑らかな曲線 SVG グラフチャート -->
+<div class="t-w-full t-h-44 sm:t-h-48 t-relative t-pt-2">
+<svg class="t-w-full t-h-full t-overflow-visible" preserveAspectRatio="none" viewBox="0 0 500 120">
+<defs>
+<linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="var(--primary-color)" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="var(--primary-color)" stop-opacity="0.0"></stop>
+</linearGradient>
+</defs>
+<!-- Grid Lines -->
+<line stroke="#e2e8f0" stroke-dasharray="3 3" x1="0" x2="500" y1="20" y2="20"></line>
+<line stroke="#e2e8f0" stroke-dasharray="3 3" x1="0" x2="500" y1="60" y2="60"></line>
+<line stroke="#e2e8f0" stroke-dasharray="3 3" x1="0" x2="500" y1="100" y2="100"></line>
+<!-- Area Fill -->
+<path d="M 0,90 Q 60,70 125,55 T 250,35 T 375,65 T 500,20 L 500,120 L 0,120 Z" fill="url(#chartGradient)"></path>
+<!-- Curved Stroke -->
+<path d="M 0,90 Q 60,70 125,55 T 250,35 T 375,65 T 500,20" fill="none" stroke="var(--primary-color)" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Data Dots -->
+<circle cx="125" cy="55" fill="#ffffff" r="4" stroke="var(--primary-color)" stroke-width="2"></circle>
+<circle cx="250" cy="35" fill="#ffffff" r="4" stroke="var(--primary-color)" stroke-width="2"></circle>
+<circle cx="375" cy="65" fill="#ffffff" r="4" stroke="var(--primary-color)" stroke-width="2"></circle>
+<circle cx="500" cy="20" fill="#ffffff" r="4" stroke="var(--primary-color)" stroke-width="2"></circle>
+</svg>
+</div>
+<!-- 時間軸 -->
+<div class="t-flex t-justify-between t-text-[10px] t-text-outline t-font-mono t-px-1 t-border-t t-border-slate-100 t-pt-1">
+<span class="">00:00</span>
+<span class="">04:00</span>
+<span class="">08:00</span>
+<span class="">12:00</span>
+<span class="">16:00</span>
+<span class="">20:00</span>
+<span class="">現在 (23:59)</span>
+</div>
+</div>
+<!-- 直近のタスクストリーム テーブル -->
+<div class="t-rounded-xl t-border t-border-surface-container t-bg-white t-overflow-hidden">
+<div class="t-p-3.5 t-border-b t-border-surface-container t-bg-surface-container-low/50 t-flex t-items-center t-justify-between">
+<div class="t-flex t-items-center t-gap-2">
+<span class="material-symbols-outlined t-text-[18px]" style="color: var(--primary-color);">task_alt</span>
+<h3 class="t-text-[13px] t-font-bold t-text-on-surface">直近のタスクストリーム</h3>
+</div>
+<span class="t-text-[11px] t-text-outline">全6件中 4件表示</span>
+</div>
+<div class="t-overflow-x-auto">
+<table class="t-w-full t-text-left t-border-collapse t-text-[12px]">
+<thead>
+<tr class="t-border-b t-border-surface-container t-bg-surface-container-low/30 t-text-outline t-text-[11px]">
+<th class="t-py-2.5 t-px-3.5 t-font-semibold">ワークスペース名</th>
+<th class="t-py-2.5 t-px-3 t-font-semibold">タイプ</th>
+<th class="t-py-2.5 t-px-3 t-font-semibold">担当</th>
+<th class="t-py-2.5 t-px-3 t-font-semibold">ステータス</th>
+<th class="t-py-2.5 t-px-3 t-font-semibold t-text-right">実行</th>
+</tr>
+</thead>
+<tbody class="t-divide-y t-divide-surface-container t-text-on-surface">
+<tr class="hover:t-bg-surface-container-low/40 t-transition-colors">
+<td class="t-py-2.5 t-px-3.5 t-font-medium t-flex t-items-center t-gap-2">
+<span class="t-w-2 t-h-2 t-rounded-full t-bg-emerald-500"></span>
+                      prod-ap-api-gateway
+                    </td>
+<td class="t-py-2.5 t-px-3 t-text-on-surface-variant">Kubernetes Pod</td>
+<td class="t-py-2.5 t-px-3">田中 (DevOps)</td>
+<td class="t-py-2.5 t-px-3">
+<span class="t-px-2 t-py-0.5 t-rounded-full t-text-[10px] t-font-bold t-bg-emerald-100 t-text-emerald-700">稼働中</span>
+</td>
+<td class="t-py-2.5 t-px-3 t-text-right">
+<button class="t-px-2 t-py-0.5 t-rounded t-bg-surface-container-low hover:t-bg-surface-container t-border t-border-surface-container t-text-[11px] t-font-medium t-cursor-pointer">詳細</button>
+</td>
+</tr>
+<tr class="hover:t-bg-surface-container-low/40 t-transition-colors">
+<td class="t-py-2.5 t-px-3.5 t-font-medium t-flex t-items-center t-gap-2">
+<span class="t-w-2 t-h-2 t-rounded-full t-bg-sky-500"></span>
+                      data-pipeline-sync
+                    </td>
+<td class="t-py-2.5 t-px-3 t-text-on-surface-variant">Batch Job</td>
+<td class="t-py-2.5 t-px-3">佐藤 (Data)</td>
+<td class="t-py-2.5 t-px-3">
+<span class="t-px-2 t-py-0.5 t-rounded-full t-text-[10px] t-font-bold t-bg-sky-100 t-text-sky-700">同期中 (88%)</span>
+</td>
+<td class="t-py-2.5 t-px-3 t-text-right">
+<button class="t-px-2 t-py-0.5 t-rounded t-bg-surface-container-low hover:t-bg-surface-container t-border t-border-surface-container t-text-[11px] t-font-medium t-cursor-pointer">詳細</button>
+</td>
+</tr>
+<tr class="hover:t-bg-surface-container-low/40 t-transition-colors">
+<td class="t-py-2.5 t-px-3.5 t-font-medium t-flex t-items-center t-gap-2">
+<span class="t-w-2 t-h-2 t-rounded-full t-bg-amber-500"></span>
+                      auth-jwt-refresh-daemon
+                    </td>
+<td class="t-py-2.5 t-px-3 t-text-on-surface-variant">Microservice</td>
+<td class="t-py-2.5 t-px-3">鈴木 (Security)</td>
+<td class="t-py-2.5 t-px-3">
+<span class="t-px-2 t-py-0.5 t-rounded-full t-text-[10px] t-font-bold t-bg-amber-100 t-text-amber-800">再起動待機</span>
+</td>
+<td class="t-py-2.5 t-px-3 t-text-right">
+<button class="t-px-2 t-py-0.5 t-rounded t-bg-surface-container-low hover:t-bg-surface-container t-border t-border-surface-container t-text-[11px] t-font-medium t-cursor-pointer">ログ</button>
+</td>
+</tr>
+<tr class="hover:t-bg-surface-container-low/40 t-transition-colors">
+<td class="t-py-2.5 t-px-3.5 t-font-medium t-flex t-items-center t-gap-2">
+<span class="t-w-2 t-h-2 t-rounded-full t-bg-purple-500"></span>
+                      storage-backup-cold
+                    </td>
+<td class="t-py-2.5 t-px-3 t-text-on-surface-variant">S3 Replication</td>
+<td class="t-py-2.5 t-px-3">高橋 (Infra)</td>
+<td class="t-py-2.5 t-px-3">
+<span class="t-px-2 t-py-0.5 t-rounded-full t-text-[10px] t-font-bold t-bg-slate-100 t-text-slate-700">完了 (03:00)</span>
+</td>
+<td class="t-py-2.5 t-px-3 t-text-right">
+<button class="t-px-2 t-py-0.5 t-rounded t-bg-surface-container-low hover:t-bg-surface-container t-border t-border-surface-container t-text-[11px] t-font-medium t-cursor-pointer">詳細</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<!-- ================= 3. RIGHT PANE (幅約410px、「概要」「検索」吹き出しタブ付き) ================= -->
+<aside class="t-w-[410px] t-shrink-0 t-bg-white t-rounded-2xl t-border t-border-surface-container t-shadow-xs t-flex-col t-overflow-hidden t-transition-all t-duration-300 !t-hidden" id="docked-right-pane">
+<!-- Pane Header -->
+<div class="t-p-3.5 t-border-b t-border-surface-container t-flex t-items-center t-justify-between" style="background-color: var(--color-primary-light, var(--primary-light, #e0f2fe)); border-color: var(--color-border, var(--outline-variant, #cbd5e1));"><div class="t-flex t-items-center t-gap-2"><span class="material-symbols-outlined t-text-[19px]" style="color: var(--primary-color);">info</span><h2 class="t-text-[13px] t-font-bold t-text-on-surface">コンテンツ拡張部</h2></div></div>
+<!-- Pane Tabs (Speech Bubble 吹き出しタブスタイル) -->
+<div class="t-flex t-items-center t-px-2 t-pt-2 t-pb-0 t-bg-surface-container-low t-border-b-2 t-border-surface-container t-text-[11px] t-gap-1 t-relative">
+<button class="bubble-tab-btn right-tab-btn active t-flex-1 t-py-1.5 t-px-2 t-text-center t-cursor-pointer t-transition-all" data-pane-target="right-subpane-overview" type="button">拡張部</button>
+<button class="bubble-tab-btn right-tab-btn t-flex-1 t-py-1.5 t-px-2 t-text-center t-cursor-pointer t-transition-all" data-pane-target="right-subpane-search" type="button">
+  検索
+</button>
+</div>
+<!-- Tab Content: 概要 (ContExtSection: [+RPane+]) -->
+<div class="right-subpane t-flex t-flex-col t-p-3.5 t-space-y-4" id="right-subpane-overview"><div class="t-flex t-flex-col t-space-y-4" id="ContExtSection"><div class="t-text-[12px] t-font-bold t-text-on-surface t-flex t-items-center t-gap-1"><span class="material-symbols-outlined t-text-[16px]" style="color: var(--primary-color);">arrow_back</span><span class="">←より展開</span></div><div class="t-text-[11px] t-text-outline t-font-mono t-bg-surface-container-low/60 t-p-2.5 t-rounded-xl t-border t-border-surface-container" id="excont-expand">[+RPane+]</div></div></div>
+<!-- Tab Content: 検索 -->
+<div class="right-subpane t-hidden t-flex-col t-p-3.5 t-space-y-3" id="right-subpane-search">
+<span class="t-text-[12px] t-font-bold t-text-on-surface">リソース検索</span>
+<input class="t-w-full t-px-2.5 t-py-1.5 t-text-[11px] t-rounded-lg t-border t-border-surface-container t-bg-surface-container-low" placeholder="ID, タスク名, IPで検索..." type="text">
+<div class="t-text-[10px] t-text-outline">検索結果: 0件</div>
+</div>
+</aside>
+</div>
+</div>
+</div>
+<!-- ================= FLOATING DRAWER OVERLAY ================= -->
+<!-- ================= CENTER DRAWER (クイックアクセスドロワー: 上部5% / 下部2%) ================= -->
+<div class="t-fixed t-inset-0 t-z-50 t-bg-slate-900/40 t-backdrop-blur-xs t-hidden t-transition-opacity t-duration-300 t-opacity-0 t-flex t-items-start t-justify-center t-pt-[5vh] t-pb-[2vh] t-px-3" id="center-drawer-overlay">
+<div class="t-w-full t-max-w-[640px] t-max-h-[93vh] t-flex t-flex-col t-bg-white t-rounded-2xl t-shadow-[0_16px_48px_rgba(2,132,199,0.28)] t-border t-border-surface-container t-overflow-hidden t-transition-all t-duration-300 t-transform -t-translate-y-8 t-scale-95 t-opacity-0" id="center-drawer-panel">
+<!-- Header -->
+<div class="t-p-3.5 t-border-b t-border-surface-container t-bg-surface-container-low t-flex t-items-center t-justify-between t-shrink-0">
+<div class="t-flex t-items-center t-gap-2">
+<span class="material-symbols-outlined t-text-[20px] t-text-sky-600">layers</span>
+<div>
+<h3 class="t-text-[14px] t-font-bold t-text-on-surface">センタードロワー・クイックアクセス</h3>
+<p class="t-text-[10px] t-text-outline">クラウドアクション &amp; ショートカット統括</p>
+</div>
+</div>
+<button aria-label="センタードロワーを閉じる" class="t-w-8 t-h-8 t-rounded-lg t-flex t-items-center t-justify-center t-text-on-surface-variant hover:t-bg-surface-container hover:t-text-on-surface t-transition-colors t-cursor-pointer" id="close-center-drawer-btn" type="button">
+<span class="material-symbols-outlined t-text-[19px]">close</span>
+</button>
+</div>
+<!-- Body: 内部は空の<div> -->
+<div class="t-p-4 t-space-y-4 t-overflow-y-auto t-text-[12px] t-flex-1">
+<iframe
+  id="replase-iframe"
+  loading="lazy"
+  class="replace"
+  data-loded="unloded"
+ style="width: 100%;"
+  allow="autoplay"
+  src="https://lit.link/1426c5c6-c218-4fc8-8663-afaba1ef63c5">
+  dummy content
+</iframe>
+<div></div>
+</div>
+<!-- Footer -->
+<div class="t-p-3 t-border-t t-border-surface-container t-bg-surface-container-low t-flex t-items-center t-justify-between t-text-[11px] t-shrink-0">
+<span class="t-text-outline">ESCキーまたは背景クリックで収納</span>
+<button class="t-px-4 t-py-1.5 t-rounded-xl t-text-white t-font-semibold t-shadow-xs t-cursor-pointer" id="dismiss-center-drawer-btn" style="background-color: var(--primary-color);" type="button">
+        閉じる
+      </button>
+</div>
+</div>
+</div><div class="t-fixed t-inset-0 t-z-50 t-bg-slate-900/40 t-backdrop-blur-xs t-transition-opacity t-duration-300 t-opacity-0 t-hidden" id="unified-drawer-overlay">
+<div class="t-fixed t-top-[5vh] t-bottom-[2vh] t-h-[93vh] t-w-[90%] t-max-w-[380px] t-bg-white t-rounded-2xl t-shadow-[0_12px_40px_rgba(2,132,199,0.25)] t-border t-border-surface-container t-flex t-flex-col t-justify-between t-transition-transform t-duration-300 t-transform t-overflow-hidden t-right-4 t-translate-x-[110%]" id="unified-drawer-panel">
+<!-- Drawer Header -->
+<div class="t-p-3.5 t-border-b t-border-surface-container t-flex t-items-center t-justify-between t-bg-surface-container-low t-shrink-0" style="background-color: var(--color-primary-light, var(--primary-light, #e0f2fe)); border-color: var(--color-border, var(--outline-variant, #cbd5e1));">
+<div class="t-flex t-items-center t-gap-2">
+<span class="material-symbols-outlined t-text-[20px]" id="drawer-icon" style="color: var(--primary-color);">info</span>
+<span class="t-text-[14px] t-font-bold t-text-on-surface" id="drawer-header-title">コンテンツ拡張部</span>
+</div>
+<button aria-label="ドロワーを閉じる" class="t-w-7 t-h-7 t-rounded-lg t-flex t-items-center t-justify-center t-text-on-surface-variant hover:t-bg-surface-container hover:t-text-on-surface t-transition-colors t-cursor-pointer" id="close-drawer-btn" type="button">
+<span class="material-symbols-outlined t-text-[18px]">close</span>
+</button>
+</div>
+<!-- Drawer Dynamic Scrollable Content -->
+<div class="t-flex-1 t-overflow-y-auto t-flex t-flex-col" id="drawer-dynamic-body"><aside class="t-flex t-flex-col t-w-full">
+<!-- Pane Header -->
 
-        nav {
-            opacity: 0.9;
-            box-shadow: 0 5px 5px -8px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-nav {
-            gap: 20px;
-        }
-
-        .breadcrumb {
-            background-color: #f8f9fa;
-            padding: 8px 15px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-
-        .breadcrumb li {
-            display: inline;
-        }
-
-        .breadcrumb li a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .breadcrumb li a:hover {
-            text-decoration: underline;
-        }
-
-        .breadcrumb li + li::before {
-            content: "\203A"; /* › */
-            color: #6c757d;
-            padding: 0 8px;
-        }
-
-        .jumbotron {
-            padding: 2rem 1rem;
-            margin-bottom: 2rem;
-            background-color: #e9ecef;
-            border-radius: .3rem;
-        }
-
-        .jumbotron h1 {
-            font-size: 2.5rem;
-            font-weight: bold;
-        }
-
-        .jumbotron p {
-            font-size: 1.25rem;
-            margin-bottom: 1.5rem;
-        }
-
-
-        .footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            height: 65px;
-            background-color: #d5d5d5;
-        }
-
-        .footer > .container {
-            padding-right: 15px;
-            padding-left: 15px;
-        }
-    </style>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="http://cf363068.cloudfree.jp/modx/">Tachikawa-nsk</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#gnavi" aria-controls="gnavi" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+<!-- Pane Tabs (Speech Bubble 吹き出しタブスタイル) -->
+<div class="t-flex t-items-center t-px-2 t-pt-2 t-pb-0 t-bg-surface-container-low t-border-b-2 t-border-surface-container t-text-[11px] t-gap-1 t-relative">
+<button class="bubble-tab-btn right-tab-btn active t-flex-1 t-py-1.5 t-px-2 t-text-center t-cursor-pointer t-transition-all" data-pane-target="right-subpane-overview" type="button">拡張部</button>
+<button class="bubble-tab-btn right-tab-btn t-flex-1 t-py-1.5 t-px-2 t-text-center t-cursor-pointer t-transition-all" data-pane-target="right-subpane-search" type="button">
+  検索
+</button>
+</div>
+<!-- Tab Content: 概要 (ContExtSection: [+RPane+]) -->
+<div class="right-subpane t-flex t-flex-col t-p-3.5 t-space-y-4" id="right-subpane-overview"><div class="t-flex t-flex-col t-space-y-4" id="ContExtSection"><div class="t-text-[12px] t-font-bold t-text-on-surface t-flex t-items-center t-gap-1"><span class="material-symbols-outlined t-text-[16px]" style="color: var(--primary-color);">arrow_back</span><span class="">←より展開</span></div><div class="t-text-[11px] t-text-outline t-font-mono t-bg-surface-container-low/60 t-p-2.5 t-rounded-xl t-border t-border-surface-container" id="excont-expand">[+RPane+]</div></div></div>
+<!-- Tab Content: 検索 -->
+<div class="right-subpane t-hidden t-flex-col t-p-3.5 t-space-y-3" id="right-subpane-search">
+<span class="t-text-[12px] t-font-bold t-text-on-surface">リソース検索</span>
+<input class="t-w-full t-px-2.5 t-py-1.5 t-text-[11px] t-rounded-lg t-border t-border-surface-container t-bg-surface-container-low" placeholder="ID, タスク名, IPで検索..." type="text">
+<div class="t-text-[10px] t-text-outline">検索結果: 0件</div>
+</div>
+</aside></div>
+<!-- Drawer Footer -->
+<div class="t-p-3 t-border-t t-border-surface-container t-bg-surface-container-low t-flex t-justify-between t-items-center t-text-[11px] t-shrink-0">
+<span class="t-text-outline">SkyDesk ドロワー</span>
+<button class="t-px-3.5 t-py-1.5 t-rounded-xl t-text-white t-font-semibold t-transition-colors t-shadow-xs t-cursor-pointer" id="dismiss-drawer-btn" style="background-color: var(--primary-color);" type="button">
+          閉じる
         </button>
-        <div id="gnavi" class="collapse navbar-collapse justify-content-end">
-            <ul class="navbar-nav"><li><a href="http://cf363068.cloudfree.jp/modx/news/" title="新着情報" >新着情報</a></li>
-<li><a href="http://cf363068.cloudfree.jp/modx/features/" title="MODXの主な特長" >MODXの特長</a></li>
-<li><a href="http://cf363068.cloudfree.jp/modx/geting-help.html" title="サポート" >サポート</a></li>
-<li class="last"><a href="http://cf363068.cloudfree.jp/modx/contact/" title="お問い合わせ" >お問い合わせ</a></li>
-</ul>
-        </div>
-    </div>
-</nav>
-<div class="jumbotron">
-    <div class="container">
-        <h1>Tachikawa-nsk</h1>
-        <p>試験サイト</p>
-        <a class="btn btn-primary btn-lg" href="features/" role="button">Learn more &raquo;</a>
-    </div>
 </div>
-<div class="container" style="padding-bottom:3em;">
-    <div class="row">
-                <div class="col-lg-12">
-            <p class="lead">このサンプルサイトが個性的なウェブサイトを構築するためのヒントになれば幸いです。</p>
-            <div class="row">
-
-    <div class="col-md-4">
-      <h2 class="h3">拡張性豊かなデザインワーク</h2>
-      <p>自由自在なデザインワーク コアが直接出力するhtmlコードがほとんどないMODXは、Ajaxテクニックを自由自在に扱うことができます。アクセシビリティの高い、正しいCSSレイアウトのサイト管理も簡単にできます。  </p>
-      <p><a role="button" href="http://cf363068.cloudfree.jp/modx/features/extendable.html" class="btn btn-default">View details »</a></p>
-    </div>
-
-    <div class="col-md-4">
-      <h2 class="h3">メニューとリスト</h2>
-      <p>ナビゲーション表示はWayfinder（ウェイファインダー）、複数コンテンツのリスト表示はDitto（ディトーまたはディット）を使います。  </p>
-      <p><a role="button" href="http://cf363068.cloudfree.jp/modx/features/menus.html" class="btn btn-default">View details »</a></p>
-    </div>
-
-    <div class="col-md-4">
-      <h2 class="h3">コンテンツ管理</h2>
-      <p>管理画面からコンテンツ管理 管理画面では、コンテンツを新規追加したり、テンプレートを調整したり、ウェブサイトを構成する各種パーツの管理が簡単にできます。ユーザグループごとに、管理画面の操作権限を設定することもできます。  </p>
-      <p><a role="button" href="http://cf363068.cloudfree.jp/modx/features/cms.html" class="btn btn-default">View details »</a></p>
-    </div>
-
 </div>
+</div>
+<!-- ================= GLOBAL FIXED DUAL FOOTER ================= -->
+<footer class="t-fixed t-bottom-0 t-left-0 t-w-full t-z-30 t-shadow-lg">
+<!-- Upper Tier: Interactive Workspace Memo / Status Input Bar -->
+<div class="t-w-full t-bg-[#eff6ff] t-border-t t-border-[#bfdbfe] t-px-3 sm:t-px-6 t-py-2 t-flex t-flex-wrap t-items-center t-justify-between t-gap-2.5 linkfooter" id="linkfooter"><div class="t-w-full t-flex t-items-start t-justify-between t-gap-2"><nav class="t-flex-1 t-flex t-flex-wrap t-items-start t-justify-between t-gap-4 sm:t-gap-6 t-text-[11px] t-overflow-hidden t-transition-all t-duration-300" id="footerNavi" style="max-height: 0px; min-width: 880px;"><div class="t-flex t-flex-col t-gap-1"><span class="t-font-bold t-text-on-surface"><a class="hover:t-underline" href="" style="color: var(--primary-color);">MODX Japan</a></span><ul class="t-flex t-flex-wrap sm:t-flex-col t-gap-x-3 t-gap-y-0.5 t-text-on-surface-variant"><li class=""><a class="hover:t-underline" href="">ニュース</a></li><li class=""><a class="hover:t-underline" href="">ダウンロード</a></li><li class=""><a class="hover:t-underline" href="">MODX日本公式フォーラム</a></li></ul></div><div class="t-flex t-flex-col t-gap-1"><span class="t-font-bold t-text-on-surface"><a class="hover:t-underline" href="" style="color: var(--primary-color);">MODXについて</a></span><ul class="t-flex t-flex-wrap sm:t-flex-col t-gap-x-3 t-gap-y-0.5 t-text-on-surface-variant"><li class=""><a class="hover:t-underline" href="">Revolution</a></li><li class=""><a class="hover:t-underline" href="">Evolution</a></li><li class=""><a class="hover:t-underline" href="">ドキュメント(Evo)</a></li></ul></div><div class="t-flex t-flex-col t-gap-1"><span class="t-font-bold t-text-on-surface"><a class="hover:t-underline" href="" style="color: var(--primary-color);">導入ガイド</a></span><ul class="t-flex t-flex-wrap sm:t-flex-col t-gap-x-3 t-gap-y-0.5 t-text-on-surface-variant"><li class=""><a class="hover:t-underline" href="">FAQ(よくある質問)</a></li><li class=""><a class="hover:t-underline" href="">MODXデモサイト</a></li><li class=""><a class="hover:t-underline" href="">MODXが稼働するレンタルサーバー</a></li></ul></div><div class="t-flex t-flex-col t-gap-1"><span class="t-font-bold t-text-on-surface"><a class="hover:t-underline" href="" style="color: var(--primary-color);">MODX Japanについて</a></span><ul class="t-flex t-flex-wrap sm:t-flex-col t-gap-x-3 t-gap-y-0.5 t-text-on-surface-variant"><li class=""><a class="hover:t-underline" href="">このサイトについて</a></li><li class=""><a class="hover:t-underline" href="">活動の目的と内容</a></li><li class=""><a class="hover:t-underline" href="">運営への協力について</a></li></ul></div></nav><button aria-label="リンクフッター開閉" class="t-shrink-0 t-w-7 t-h-7 t-rounded-lg t-bg-white hover:t-bg-surface-container t-border t-border-[#bfdbfe] t-flex t-items-center t-justify-center t-cursor-pointer t-transition-all t-shadow-xs" id="footer-collapse-btn" onclick="const nav = document.getElementById('footerNavi'); const icon = document.getElementById('footer-collapse-icon'); const isCollapsed = nav.style.maxHeight === '26px'; if(isCollapsed){ nav.style.maxHeight = '200px'; icon.textContent = 'keyboard_arrow_down'; } else { nav.style.maxHeight = '26px'; icon.textContent = 'keyboard_arrow_up'; }" title="フッターサイズ切り替え" type="button"><span class="material-symbols-outlined t-text-[18px]" id="footer-collapse-icon" style="color: var(--primary-color);">keyboard_arrow_up</span></button></div></div>
+<!-- Lower Tier: Deep Dark System Status Bar -->
+<div class="t-w-full t-h-9 t-text-[#e0f2fe] t-text-[11px] t-flex t-items-center t-justify-between t-px-4 sm:t-px-6 t-border-t t-border-white/10 t-select-none t-transition-colors infofooter" id="infofooter" style="background-color: var(--footer-bg);"><div class="t-flex t-items-center t-gap-2"><img alt="MODX Logo" onerror="this.onerror=null; this.src='https://cf363068.cloudfree.jp/modx/img/modxlogo.png';" src="https://cf363068.cloudfree.jp/modx/img/modxlogo.png" style="width: 90px; height: 30px; object-fit: contain; vertical-align: middle;"><span class="t-text-white/90"> Powered by MODX</span></div><div class="t-flex t-items-center"><span class="t-text-white/90">© 2026 MODX Evolution 向フルレスポンシブテンプレート (1.2.4J)</span></div><div class="t-flex t-items-center t-justify-end" id="nav-footer-auther"><span class="t-text-white/90">Author | T-Pons</span></div></div>
+</footer>
+<!-- ================= INTERACTIVE SCRIPT ================= -->
+<script>
+    (() => {
+      // Elements
+      const screenSelect = document.getElementById('header-screen-size-select');
+      const themeSelect = document.getElementById('header-theme-select');
+      const outerContainer = document.getElementById('sim-outer-container');
+      const paneFlexContainer = document.getElementById('pane-flex-container');
+      const resIndicator = document.getElementById('sim-res-indicator');
+      const layoutIndicator = document.getElementById('pane-layout-indicator');
+      const footerStatusTag = document.getElementById('footer-status-tag');
+      const resetBtn = document.getElementById('quick-reset-sim');
+      const themeBadgeElem = document.getElementById('theme-badge-elem');
+      const footerThemeName = document.getElementById('footer-theme-name');
+      const dockedLeftPane = document.getElementById('docked-left-pane');
+      const dockedRightPane = document.getElementById('docked-right-pane');
+      // Drawer & Hamburger Elements
+      const drawerOverlay = document.getElementById('unified-drawer-overlay');
+      const drawerPanel = document.getElementById('unified-drawer-panel');
+      const drawerHeaderTitle = document.getElementById('drawer-header-title');
+      const drawerIcon = document.getElementById('drawer-icon');
+      const drawerDynamicBody = document.getElementById('drawer-dynamic-body');
+      const closeDrawerBtn = document.getElementById('close-drawer-btn');
+      const dismissDrawerBtn = document.getElementById('dismiss-drawer-btn');
+      const headerLeftBtn = document.getElementById('header-left-drawer-btn');
+      const hamburgerIconWrapper = document.getElementById('hamburger-icon-wrapper');
+      const headerRightBtn = document.getElementById('header-right-drawer-btn');
+      const rightHamburgerIconWrapper = document.getElementById('right-hamburger-icon-wrapper');
+      const quickInspectorBtn = document.getElementById('quick-toggle-inspector-btn');
+      // Center Drawer Elements & State
+      const headerCenterBtn = document.getElementById('header-center-drawer-btn');
+      const centerBtnClosedState = document.getElementById('center-btn-state-closed');
+      const centerBtnOpenState = document.getElementById('center-btn-state-open');
+      const centerDrawerOverlay = document.getElementById('center-drawer-overlay');
+      const centerDrawerPanel = document.getElementById('center-drawer-panel');
+      const closeCenterDrawerBtn = document.getElementById('close-center-drawer-btn');
+      const dismissCenterDrawerBtn = document.getElementById('dismiss-center-drawer-btn');
+      let isDrawerOpen = false;
+      let isCenterDrawerOpen = false;
+      function updateCenterDrawerButtonState(isOpen) {
+        if (!headerCenterBtn) return;
+        headerCenterBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        if (isOpen) {
+          centerBtnClosedState?.classList.add('t-hidden');
+          centerBtnClosedState?.classList.remove('t-flex');
+          centerBtnOpenState?.classList.remove('t-hidden');
+          centerBtnOpenState?.classList.add('t-flex');
+          headerCenterBtn.classList.add('t-bg-white/30', 't-ring-2', 't-ring-white/50');
+        } else {
+          centerBtnOpenState?.classList.add('t-hidden');
+          centerBtnOpenState?.classList.remove('t-flex');
+          centerBtnClosedState?.classList.remove('t-hidden');
+          centerBtnClosedState?.classList.add('t-flex');
+          headerCenterBtn.classList.remove('t-bg-white/30', 't-ring-2', 't-ring-white/50');
+        }
+      }
+      function openCenterDrawer() {
+        isCenterDrawerOpen = true;
+        updateCenterDrawerButtonState(true);
+        centerDrawerOverlay?.classList.remove('t-hidden');
+        requestAnimationFrame(() => {
+          centerDrawerOverlay?.classList.remove('t-opacity-0');
+          centerDrawerPanel?.classList.remove('-t-translate-y-8', 't-scale-95', 't-opacity-0');
+          centerDrawerPanel?.classList.add('t-translate-y-0', 't-scale-100', 't-opacity-100');
+        });
+      }
+      function closeCenterDrawer() {
+        isCenterDrawerOpen = false;
+        updateCenterDrawerButtonState(false);
+        centerDrawerOverlay?.classList.add('t-opacity-0');
+        centerDrawerPanel?.classList.remove('t-translate-y-0', 't-scale-100', 't-opacity-100');
+        centerDrawerPanel?.classList.add('-t-translate-y-8', 't-scale-95', 't-opacity-0');
+        setTimeout(() => {
+          centerDrawerOverlay?.classList.add('t-hidden');
+        }, 250);
+      }
+      function toggleCenterDrawer() {
+        if (isCenterDrawerOpen) {
+          closeCenterDrawer();
+        } else {
+          openCenterDrawer();
+        }
+      }
+      headerCenterBtn?.addEventListener('click', toggleCenterDrawer);
+      closeCenterDrawerBtn?.addEventListener('click', closeCenterDrawer);
+      dismissCenterDrawerBtn?.addEventListener('click', closeCenterDrawer);
+      centerDrawerOverlay?.addEventListener('click', (e) => {
+        if (e.target === centerDrawerOverlay) closeCenterDrawer();
+      });
+      // Theme logic
+      const themeMap = {
+        sorairo: { name: '深空色', class: '', color: '#0284c7' },
+        modx: { name: 'modx用', class: 'theme-modx', color: '#415141' },
+        asagi: { name: '浅葱色', class: 'theme-asagi', color: '#0d9488' },
+        ruri: { name: '瑠璃色', class: 'theme-ruri', color: '#2563eb' },
+        yuakane: { name: '夕茜', class: 'theme-yuakane', color: '#ea580c' },
+        sumi: { name: '墨色', class: 'theme-sumi', color: '#475569' }
+      };
+      function applyTheme(themeKey) {
+        const theme = themeMap[themeKey] || themeMap.sorairo;
+        document.body.className = document.body.className.replace(/theme-\w+/g, '').trim();
+        if (theme.class) {
+          document.body.classList.add(theme.class);
+        }
+        if (themeBadgeElem) {
+          themeBadgeElem.textContent = `${theme.name} (${themeKey.charAt(0).toUpperCase() + themeKey.slice(1)})`;
+          themeBadgeElem.style.color = 'var(--primary-color)';
+        }
+        if (footerThemeName) footerThemeName.textContent = theme.name;
+      }
+      themeSelect?.addEventListener('change', (e) => {
+        applyTheme(e.target.value);
+      });
+      // Simulation mode logic - PCモード含め常に max-w-full
+      window.setSimulationMode = function(mode) {
+        if (screenSelect) screenSelect.value = mode;
+        outerContainer.className = 't-w-full t-flex t-justify-center t-transition-all t-duration-300 t-max-w-full';
+        paneFlexContainer.className = 't-w-full t-flex t-items-start t-gap-3 lg:t-gap-4 t-transition-all t-duration-300 t-max-w-full';
+        dockedLeftPane.classList.remove('t-hidden', 'lg:t-flex', '!t-flex', '!t-hidden');
+        dockedRightPane.classList.remove('t-hidden', 'md:t-flex', '!t-flex', '!t-hidden');
+        document.querySelectorAll('.size-preset-btn').forEach(btn => {
+          if (btn.dataset.mode === mode) {
+            btn.classList.add('t-border-sky-500', 't-bg-sky-50');
+          } else {
+            btn.classList.remove('t-border-sky-500', 't-bg-sky-50');
+          }
+        });
+        // Hamburger button display sync:
+        headerLeftBtn.classList.remove('!t-hidden', '!t-flex', 't-hidden');
+        headerRightBtn.classList.remove('!t-hidden', '!t-flex', 't-hidden');
+        if (mode === 'pc') {
+          outerContainer.classList.add('t-w-full', 't-max-w-full', 't-mx-auto');
+          paneFlexContainer.classList.add('t-w-full', 't-max-w-full');
+          dockedLeftPane.classList.add('!t-flex');
+          dockedRightPane.classList.add('!t-flex');
+          // 左ペイン表示時はヘッダー左ハンバーガーを非表示
+          headerLeftBtn.classList.add('!t-hidden');
+          headerRightBtn.classList.add('!t-hidden');
+          if (resIndicator) resIndicator.textContent = 'PC 3ペイン (1280px+)';
+          if (layoutIndicator) layoutIndicator.textContent = 'PC 3ペイン常時展開中';
+          if (footerStatusTag) footerStatusTag.textContent = 'PC表示 (3ペイン同時展開)';
+        } else if (mode === 'tablet') {
+          outerContainer.classList.add('t-max-w-[860px]', 't-mx-auto');
+          dockedLeftPane.classList.add('!t-hidden');
+          dockedRightPane.classList.add('!t-flex');
+          headerLeftBtn.classList.add('!t-flex');
+          headerRightBtn.classList.add('!t-hidden');
+          if (resIndicator) resIndicator.textContent = 'タブレット 2ペイン (768px)';
+          if (layoutIndicator) layoutIndicator.textContent = 'タブレット 2ペイン構成 (左メニュー格納)';
+          if (footerStatusTag) footerStatusTag.textContent = 'タブレット表示 (2ペイン)';
+        } else if (mode === 'mobile') {
+          outerContainer.classList.add('t-max-w-[390px]', 't-mx-auto');
+          dockedLeftPane.classList.add('!t-hidden');
+          dockedRightPane.classList.add('!t-hidden');
+          headerLeftBtn.classList.add('!t-flex');
+          headerRightBtn.classList.add('!t-flex');
+          if (resIndicator) resIndicator.textContent = 'スマホ 1ペイン (375px)';
+          if (layoutIndicator) layoutIndicator.textContent = 'スマホ 1ペイン構成 (左右メニューはドロワー)';
+          if (footerStatusTag) footerStatusTag.textContent = 'スマホ表示 (ドロワー連携)';
+        } else {
+          dockedLeftPane.classList.add('t-hidden', 'lg:t-flex');
+          dockedRightPane.classList.add('t-hidden', 'md:t-flex');
+          headerLeftBtn.className = 'lg:t-hidden t-flex t-items-center t-justify-center t-w-9 t-h-9 t-rounded-xl t-bg-white/15 hover:t-bg-white/25 active:t-scale-95 t-text-white t-border t-border-white/30 t-transition-all t-shadow-xs t-cursor-pointer t-shrink-0';
+          headerRightBtn.className = 't-flex md:t-hidden t-items-center t-justify-center t-w-9 t-h-9 t-rounded-xl t-bg-white/15 hover:t-bg-white/25 active:t-scale-95 t-text-white t-border t-border-white/30 t-transition-all t-shadow-xs t-cursor-pointer t-shrink-0 t-ml-0.5';
+          if (resIndicator) resIndicator.textContent = '自動レスポンシブ';
+          if (layoutIndicator) layoutIndicator.textContent = '画面幅連動マルチペイン (Auto)';
+          if (footerStatusTag) footerStatusTag.textContent = 'レスポンシブ (画面幅自動追従)';
+        }
+      };
+      screenSelect?.addEventListener('change', (e) => {
+        setSimulationMode(e.target.value);
+      });
+      // Left Docked Tabs Handler (Speech Bubble スタイル連動)
+      const leftTabBtns = document.querySelectorAll('#docked-left-pane .left-tab-btn');
+      const leftSubpanes = document.querySelectorAll('#docked-left-pane .left-subpane');
+      function switchLeftTab(targetId) {
+        leftTabBtns.forEach(b => {
+          if (b.dataset.paneTarget === targetId) {
+            b.classList.add('active');
+          } else {
+            b.classList.remove('active');
+          }
+        });
+        leftSubpanes.forEach(pane => {
+          if (pane.id === targetId) {
+            pane.classList.remove('t-hidden');
+            pane.classList.add('t-flex');
+          } else {
+            pane.classList.add('t-hidden');
+            pane.classList.remove('t-flex');
+          }
+        });
+      }
+      leftTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          switchLeftTab(btn.dataset.paneTarget);
+        });
+      });
+      // Right Docked Tabs Handler (Speech Bubble スタイル連動)
+      const rightTabBtns = document.querySelectorAll('#docked-right-pane .right-tab-btn');
+      const rightSubpanes = document.querySelectorAll('#docked-right-pane .right-subpane');
+      function switchRightTab(targetId) {
+        rightTabBtns.forEach(b => {
+          if (b.dataset.paneTarget === targetId) {
+            b.classList.add('active');
+          } else {
+            b.classList.remove('active');
+          }
+        });
+        rightSubpanes.forEach(pane => {
+          if (pane.id === targetId) {
+            pane.classList.remove('t-hidden');
+            pane.classList.add('t-flex');
+          } else {
+            pane.classList.add('t-hidden');
+            pane.classList.remove('t-flex');
+          }
+        });
+        const contExtSec = document.getElementById('ContExtSection');
+        if (contExtSec) {
+          if (targetId === 'right-subpane-overview') {
+            contExtSec.classList.remove('t-hidden');
+            contExtSec.classList.add('t-flex');
+          }
+        }
+      }
+      rightTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          switchRightTab(btn.dataset.paneTarget);
+        });
+      });
+      // ================= DOM CLONING MECHANISM FOR DRAWER =================
+      function renderClonedDrawerContent(side) {
+        drawerDynamicBody.innerHTML = '';
+        if (side === 'left') {
+          drawerHeaderTitle.textContent = '表示設定';
+          drawerIcon.textContent = 'tune';
+          const leftClone = dockedLeftPane.cloneNode(true);
+          leftClone.removeAttribute('id');
+          leftClone.className = 't-flex t-flex-col t-w-full';
+          // ドロワー上部に重複しているヘッダーカードを除去（drawer-header-titleと重複防止）
+          const innerHeader = leftClone.querySelector('.t-p-3\\.5.t-border-b');
+          if (innerHeader) innerHeader.remove();
 
-        </div>
-            </div>
-</div>
-<div class="footer">
-    <div class="container">
-        <p class="text-center" style="margin: 20px 0;">(c)2026 Tachikawa-nsk</p>
-    </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+          const clonedTabs = leftClone.querySelectorAll('.left-tab-btn');
+          const clonedPanes = leftClone.querySelectorAll('.left-subpane');
+          clonedTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+              const target = tab.dataset.paneTarget;
+              clonedTabs.forEach(t => {
+                if (t === tab) {
+                  t.classList.add('active');
+                } else {
+                  t.classList.remove('active');
+                }
+              });
+              clonedPanes.forEach(p => {
+                if (p.id === target) {
+                  p.classList.remove('t-hidden');
+                  p.classList.add('t-flex');
+                } else {
+                  p.classList.add('t-hidden');
+                  p.classList.remove('t-flex');
+                }
+              });
+            });
+          });
+          drawerDynamicBody.appendChild(leftClone);
+        } else {
+          drawerHeaderTitle.textContent = 'コンテンツ拡張部';
+          drawerIcon.textContent = 'info';
+          const rightClone = dockedRightPane.cloneNode(true);
+          rightClone.removeAttribute('id');
+          rightClone.className = 't-flex t-flex-col t-w-full';
+          // ドロワー上部に重複しているヘッダーカードを除去
+          const innerHeader = rightClone.querySelector('.t-p-3\\.5.t-border-b');
+          if (innerHeader) innerHeader.remove();
+
+          const clonedTabs = rightClone.querySelectorAll('.right-tab-btn');
+          const clonedPanes = rightClone.querySelectorAll('.right-subpane');
+          clonedTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+              const target = tab.dataset.paneTarget;
+              clonedTabs.forEach(t => {
+                if (t === tab) {
+                  t.classList.add('active');
+                } else {
+                  t.classList.remove('active');
+                }
+              });
+              clonedPanes.forEach(p => {
+                if (p.id === target) {
+                  p.classList.remove('t-hidden');
+                  p.classList.add('t-flex');
+                } else {
+                  p.classList.add('t-hidden');
+                  p.classList.remove('t-flex');
+                }
+              });
+            });
+          });
+          drawerDynamicBody.appendChild(rightClone);
+        }
+      }
+      function openDrawer(mode = 'left', side = 'left') {
+        isDrawerOpen = true;
+        if (side === 'left') {
+          hamburgerIconWrapper?.classList.add('hamburger-active');
+        } else {
+          rightHamburgerIconWrapper?.classList.add('hamburger-active');
+        }
+        renderClonedDrawerContent(mode);
+        drawerPanel.classList.remove('t-left-4', 't-right-4', '-t-translate-x-[110%]', 't-translate-x-[110%]');
+        if (side === 'right') {
+          drawerPanel.classList.add('t-right-4', 't-translate-x-[110%]');
+        } else {
+          drawerPanel.classList.add('t-left-4', '-t-translate-x-[110%]');
+        }
+        drawerOverlay.classList.remove('t-hidden');
+        requestAnimationFrame(() => {
+          drawerOverlay.classList.remove('t-opacity-0');
+          drawerPanel.classList.remove('-t-translate-x-[110%]', 't-translate-x-[110%]');
+          drawerPanel.classList.add('t-translate-x-0');
+        });
+      }
+      function closeDrawer() {
+        isDrawerOpen = false;
+        hamburgerIconWrapper?.classList.remove('hamburger-active');
+        rightHamburgerIconWrapper?.classList.remove('hamburger-active');
+        drawerOverlay.classList.add('t-opacity-0');
+        if (drawerPanel.classList.contains('t-right-4')) {
+          drawerPanel.classList.remove('t-translate-x-0');
+          drawerPanel.classList.add('t-translate-x-[110%]');
+        } else {
+          drawerPanel.classList.remove('t-translate-x-0');
+          drawerPanel.classList.add('-t-translate-x-[110%]');
+        }
+        setTimeout(() => {
+          drawerOverlay.classList.add('t-hidden');
+        }, 250);
+      }
+      window.closeDrawer = closeDrawer;
+      headerLeftBtn?.addEventListener('click', () => {
+        if (isDrawerOpen) {
+          closeDrawer();
+        } else {
+          openDrawer('left', 'left');
+        }
+      });
+      headerRightBtn?.addEventListener('click', () => {
+        if (isDrawerOpen) {
+          closeDrawer();
+        } else {
+          openDrawer('right', 'right');
+        }
+      });
+      closeDrawerBtn?.addEventListener('click', closeDrawer);
+      dismissDrawerBtn?.addEventListener('click', closeDrawer);
+      drawerOverlay?.addEventListener('click', (e) => {
+        if (e.target === drawerOverlay) closeDrawer();
+      });
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (isCenterDrawerOpen) closeCenterDrawer();
+          if (isDrawerOpen) closeDrawer();
+        }
+      });
+      // Init
+      setSimulationMode('auto');
+    })();
+  </script>
+<script>function updateBrowserViewSize(){const iw=document.getElementById('bvs-inner-w');const ih=document.getElementById('bvs-inner-h');const ow=document.getElementById('bvs-outer-w');const oh=document.getElementById('bvs-outer-h');if(iw) iw.textContent = window.innerWidth + 'px';if(ih) ih.textContent = window.innerHeight + 'px';if(ow) ow.textContent = window.outerWidth + 'px';if(oh) oh.textContent = window.outerHeight + 'px';}document.querySelectorAll('[data-pane-target="mdx-performance"]').forEach(btn=>{btn.addEventListener('click', updateBrowserViewSize);});window.addEventListener('resize', ()=>{if(!document.getElementById('mdx-performance')?.classList.contains('t-hidden')) updateBrowserViewSize();});</script>
+
+</body></html>
